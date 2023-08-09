@@ -30,11 +30,11 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
-    "src/**/*.vue",
     "src/**/*.less",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
-, "shims-react.d.ts"  ],
+    "tests/**/*.tsx",
+    "shims-react.d.ts"
+  ],
   "exclude": [
     "node_modules"
   ]
