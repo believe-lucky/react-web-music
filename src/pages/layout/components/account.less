@@ -1,0 +1,45 @@
+// 用户信息浮层
+.accountContainer {
+  width: 248px;
+  // 动态 关注 粉丝 行
+  .accountStatistics {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    .account {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      p {
+        font-size: 22px;
+        font-weight: bold;
+      }
+      span {
+        margin-top: -4px;
+        color: #666;
+      }
+    }
+  }
+
+  .signIn {
+    width: 80px;
+    height: 32px;
+    box-sizing: border-box;
+    border: 1px solid #d9d9d9;
+    border-radius: 20px;
+    margin: 0 auto;
+    line-height: 32px;
+    padding-inline: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+    .iconfont {
+      font-size: 14px;
+      margin-right: 4px;
+    }
+  }
+
+  .ant-divider {
+    margin-block: 10px;
+  }
+}
