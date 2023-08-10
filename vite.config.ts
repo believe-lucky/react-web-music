@@ -10,5 +10,13 @@ export default defineConfig({
     alias: {
       "@": resolve(__dirname, "src")
     }
+  },
+  css: {
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true,
+        additionalData: `@import "${resolve(__dirname, 'src/assets/css/globalVariate.less')}";`
+      }
+    }
   }
 })
