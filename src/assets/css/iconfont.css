@@ -1,0 +1,71 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 4203657 */
+  src: url('iconfont.woff2?t=1691654363570') format('woff2'),
+       url('iconfont.woff?t=1691654363570') format('woff'),
+       url('iconfont.ttf?t=1691654363570') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-Clothes:before {
+  content: "\e656";
+}
+
+.icon-chat:before {
+  content: "\e650";
+}
+
+.icon-logout:before {
+  content: "\e698";
+}
+
+.icon-vip:before {
+  content: "\e83d";
+}
+
+.icon-kefu:before {
+  content: "\e60d";
+}
+
+.icon-user:before {
+  content: "\e633";
+}
+
+.icon-xunzhang:before {
+  content: "\f468";
+}
+
+.icon-shopping:before {
+  content: "\e869";
+}
+
+.icon-coin:before {
+  content: "\e9dd";
+}
+
+.icon-maikefeng:before {
+  content: "\e606";
+}
+
+.icon-left:before {
+  content: "\e628";
+}
+
+.icon-right:before {
+  content: "\e642";
+}
+
+.icon-sun:before {
+  content: "\e663";
+}
+
+.icon-moon:before {
+  content: "\e6c9";
+}
+

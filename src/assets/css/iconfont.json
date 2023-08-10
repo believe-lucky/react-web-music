@@ -1,0 +1,107 @@
+{
+  "id": "4203657",
+  "name": "react-web-music",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "网易云音乐",
+  "glyphs": [
+    {
+      "icon_id": "28660968",
+      "name": "Clothes",
+      "font_class": "Clothes",
+      "unicode": "e656",
+      "unicode_decimal": 58966
+    },
+    {
+      "icon_id": "392055",
+      "name": "CHAT",
+      "font_class": "chat",
+      "unicode": "e650",
+      "unicode_decimal": 58960
+    },
+    {
+      "icon_id": "3852150",
+      "name": "logout",
+      "font_class": "logout",
+      "unicode": "e698",
+      "unicode_decimal": 59032
+    },
+    {
+      "icon_id": "8288816",
+      "name": "VIP",
+      "font_class": "vip",
+      "unicode": "e83d",
+      "unicode_decimal": 59453
+    },
+    {
+      "icon_id": "8575001",
+      "name": "详情页客服 ",
+      "font_class": "kefu",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "19099337",
+      "name": "User",
+      "font_class": "user",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "21061542",
+      "name": "勋章",
+      "font_class": "xunzhang",
+      "unicode": "f468",
+      "unicode_decimal": 62568
+    },
+    {
+      "icon_id": "34453273",
+      "name": "shopping",
+      "font_class": "shopping",
+      "unicode": "e869",
+      "unicode_decimal": 59497
+    },
+    {
+      "icon_id": "24341379",
+      "name": "coin-line",
+      "font_class": "coin",
+      "unicode": "e9dd",
+      "unicode_decimal": 59869
+    },
+    {
+      "icon_id": "1374718",
+      "name": "麦克风",
+      "font_class": "maikefeng",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "109753",
+      "name": "left",
+      "font_class": "left",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "109779",
+      "name": "right",
+      "font_class": "right",
+      "unicode": "e642",
+      "unicode_decimal": 58946
+    },
+    {
+      "icon_id": "6360772",
+      "name": "sun",
+      "font_class": "sun",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "21513647",
+      "name": "moon",
+      "font_class": "moon",
+      "unicode": "e6c9",
+      "unicode_decimal": 59081
+    }
+  ]
+}
