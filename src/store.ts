@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import headerStoreSlice from './pages/layout/headerStoreSlice'
+import headerStoreSlice from './store/headerStoreSlice'
 
 export default configureStore({
   reducer: {
