@@ -10,7 +10,8 @@
   }
   ul.hotSearchList {
     height: calc(100% - 30px);
-    li.hotSearchListItem {
+    // 热搜榜列表
+    li.hotSearchListItem, li.searchSonItem {
       height: 54px;
       width: 100%;
       padding: 10px 20px;
@@ -19,6 +20,7 @@
       align-items: center;
       &:hover {
         background: #f2f2f2;
+        cursor: pointer;
       }
       .index {
         width: 34px;
@@ -47,6 +49,10 @@
           white-space: nowrap;
         }
       }
+    }
+    // 搜索列表
+    li.searchSonItem {
+      height: 36px;
     }
   }
 }

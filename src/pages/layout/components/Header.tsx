@@ -14,8 +14,11 @@ import { search } from "../api/header";
 import { useRequest } from 'ahooks'
 import { useImmer } from 'use-immer'
 import SearchContent from "./SearchContent";
-
-const searchSon = function (params: { keywords: string }) {
+interface SearchParams {
+  keywords: string,
+  // type: number
+}
+const searchSon = function (params: SearchParams) {
   return search(params)
 }
 
@@ -40,7 +43,10 @@ export default function Header() {
     setKeywords(e.target.value);
     await run({ keywords: e.target.value })
   }, [keywords])
-
+  // 子组件卸载后，清空数据
+  const handleDestory = () => {
+    setSonList([])
+  }
   return (
     <div className="headerContent">
       <div className="logo">
@@ -55,7 +61,13 @@ export default function Header() {
           <i className="iconfont icon-right"></i>
         </div>
         <div className="headerSearch">
-          <Popover content={<SearchContent sonList={sonList} />} arrow={false} trigger="click" overlayClassName="searchPop">
+          <Popover
+            content={<SearchContent sonList={sonList} handleDestory={handleDestory}/>}
+            arrow={false}
+            trigger="click"
+            overlayClassName="searchPop"
+            destroyTooltipOnHide
+          >
             <Space>
               <Input
                 placeholder="大家都在搜大家都在搜大家都在搜"
