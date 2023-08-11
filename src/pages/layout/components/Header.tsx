@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Input, Avatar, Space, Popover } from "antd";
+import { useCallback, useState } from "react";
+import { Input, Avatar, Space, Popover, message } from "antd";
 import {
   SearchOutlined,
   UserOutlined,
@@ -7,10 +7,40 @@ import {
   SettingOutlined,
   MailOutlined,
 } from "@ant-design/icons";
-import AccountInfo from "./AccountInfo";
+import AccountContent from "./AccountContent";
 import "./header.less";
 import Logo from "@/assets/react.svg";
+import { search } from "../api/header";
+import { useRequest } from 'ahooks'
+import { useImmer } from 'use-immer'
+import SearchContent from "./SearchContent";
+
+const searchSon = function (params: { keywords: string }) {
+  return search(params)
+}
+
 export default function Header() {
+  const [keywords, setKeywords] = useState('')
+  const [sonList, setSonList] = useImmer([])
+  const { loading, run } = useRequest(searchSon, {
+    manual: true,
+    debounceWait: 500,
+    onSuccess: (res, params) => {
+      if (res.code == 200) {
+        setKeywords('')
+        setSonList(res.result.songs)
+      } else {
+        setSonList([])
+      }
+    },
+    onError: error => message.error(error.message)
+  })
+
+  const handleChangeKeywords = useCallback(async (e) => {
+    setKeywords(e.target.value);
+    await run({ keywords: e.target.value })
+  }, [keywords])
+
   return (
     <div className="headerContent">
       <div className="logo">
@@ -25,23 +55,28 @@ export default function Header() {
           <i className="iconfont icon-right"></i>
         </div>
         <div className="headerSearch">
-          <Input
-            placeholder="大家都在搜大家都在搜大家都在搜"
-            prefix={<SearchOutlined />}
-          />
+          <Popover content={<SearchContent sonList={sonList} />} arrow={false} trigger="click" overlayClassName="searchPop">
+            <Space>
+              <Input
+                placeholder="大家都在搜大家都在搜大家都在搜"
+                prefix={<SearchOutlined />}
+                value={keywords}
+                onChange={handleChangeKeywords}
+              />
+            </Space>
+          </Popover>
         </div>
         <div className="navigateIcon sing">
           <i className="iconfont icon-maikefeng"></i>
         </div>
       </div>
       <div className="userInfo">
-        {/* <AccountInfo/> */}
-        <Popover content={AccountInfo} arrow={false}>
+        <Popover content={AccountContent} arrow={false} trigger="click">
           {/* <div> */}
           <Space>
             <Avatar icon={<UserOutlined />} size={28} />
             <div className="userName">狼爱上狼爱上羊羊</div>
-            <CaretDownOutlined />
+            <CaretDownOutlined className="userOutline"/>
           </Space>
           {/* </div> */}
         </Popover>

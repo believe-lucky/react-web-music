@@ -2,7 +2,7 @@ import React from 'react'
 import { Dropdown, Space, Avatar, Divider  } from 'antd'
 import { RightOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import './account.less'
+import './accountContentStyle.less'
 
 const accountItems = [
   {icon: '', showDivider: true},
@@ -17,7 +17,7 @@ const accountItems = [
   {icon: '', showDivider: true},
   { icon: 'logout', label: '退出登录', subLabel: '', showArrows: false },
 ]
-export default function AccountInfo() {
+export default function AccountContent() {
   return (
     <div className='accountContainer'>
       <div className='accountStatistics'>
