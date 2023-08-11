@@ -1,10 +1,10 @@
-import Layout from '@/pages/layout/Layout'
+import Layout from "@/components/Layout"
 
 function App() {
 
   return (
     <>
-      <Layout/>
+      <Layout />
     </>
   )
 }

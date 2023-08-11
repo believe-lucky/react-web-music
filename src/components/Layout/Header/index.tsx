@@ -7,46 +7,49 @@ import {
   SettingOutlined,
   MailOutlined,
 } from "@ant-design/icons";
-import AccountContent from "./AccountContent";
+import AccountContent from "./Account";
 import "./header.less";
 import Logo from "@/assets/react.svg";
-import { search } from "../api/header";
-import { useRequest } from 'ahooks'
-import { useImmer } from 'use-immer'
-import SearchContent from "./SearchContent";
+import { search } from "@/api/header";
+import { useRequest } from "ahooks";
+import { useImmer } from "use-immer";
+import SearchContent from "./Searcher";
 interface SearchParams {
-  keywords: string,
+  keywords: string;
   // type: number
 }
 const searchSon = function (params: SearchParams) {
-  return search(params)
-}
+  return search(params);
+};
 
 export default function Header() {
-  const [keywords, setKeywords] = useState('')
-  const [sonList, setSonList] = useImmer([])
+  const [keywords, setKeywords] = useState("");
+  const [sonList, setSonList] = useImmer([]);
   const { loading, run } = useRequest(searchSon, {
     manual: true,
     debounceWait: 500,
     onSuccess: (res, params) => {
       if (res.code == 200) {
-        setKeywords('')
-        setSonList(res.result.songs)
+        setKeywords("");
+        setSonList(res.result.songs);
       } else {
-        setSonList([])
+        setSonList([]);
       }
     },
-    onError: error => message.error(error.message)
-  })
+    onError: (error) => message.error(error.message),
+  });
 
-  const handleChangeKeywords = useCallback(async (e) => {
-    setKeywords(e.target.value);
-    await run({ keywords: e.target.value })
-  }, [keywords])
+  const handleChangeKeywords = useCallback(
+    async (e) => {
+      setKeywords(e.target.value);
+      await run({ keywords: e.target.value });
+    },
+    [keywords]
+  );
   // 子组件卸载后，清空数据
   const handleDestory = () => {
-    setSonList([])
-  }
+    setSonList([]);
+  };
   return (
     <div className="headerContent">
       <div className="logo">
@@ -62,7 +65,9 @@ export default function Header() {
         </div>
         <div className="headerSearch">
           <Popover
-            content={<SearchContent sonList={sonList} handleDestory={handleDestory}/>}
+            content={
+              <SearchContent sonList={sonList} handleDestory={handleDestory} />
+            }
             arrow={false}
             trigger="click"
             overlayClassName="searchPop"
@@ -88,7 +93,7 @@ export default function Header() {
           <Space>
             <Avatar icon={<UserOutlined />} size={28} />
             <div className="userName">狼爱上狼爱上羊羊</div>
-            <CaretDownOutlined className="userOutline"/>
+            <CaretDownOutlined className="userOutline" />
           </Space>
           {/* </div> */}
         </Popover>

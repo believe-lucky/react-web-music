@@ -1,22 +1,30 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
-
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import { resolve } from "path";
+import eslintPlugin from "vite-plugin-eslint";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    eslintPlugin({
+      include: ["src/*.jsx", "src/**/*.jsx"],
+    }),
+  ],
   resolve: {
     alias: {
-      "@": resolve(__dirname, "src")
-    }
+      "@": resolve(__dirname, "src"),
+    },
   },
   css: {
     preprocessorOptions: {
       less: {
         javascriptEnabled: true,
-        additionalData: `@import "${resolve(__dirname, 'src/assets/css/globalVariate.less')}";`
-      }
-    }
-  }
-})
+        additionalData: `@import "${resolve(
+          __dirname,
+          "src/styles/globalVariate.less"
+        )}";`,
+      },
+    },
+  },
+});

@@ -12,20 +12,12 @@
     "useDefineForClassFields": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": [
-      "webpack-env",
-      "jest"
-    ],
+    "types": ["webpack-env", "jest"],
     "paths": {
-      "@/*":["src/*"],
+      "@/*": ["src/*"],
       "views/*": ["src/views/*"]
     },
-    "lib": [
-      "esnext",
-      "dom",
-      "dom.iterable",
-      "scripthost"
-    ]
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": [
     "src/**/*.ts",
@@ -33,9 +25,8 @@
     "src/**/*.less",
     "tests/**/*.ts",
     "tests/**/*.tsx",
-    "shims-react.d.ts"
+    "shims-react.d.ts",
+    "src/main.tsx"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

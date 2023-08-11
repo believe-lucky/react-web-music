@@ -3,7 +3,7 @@ import "./layout.less";
 
 const { Header, Sider, Content, Footer } = Layout;
 
-import HeaderContainer from "./components/Header";
+import HeaderContainer from "./Header";
 const contentStyle: React.CSSProperties = {
   textAlign: "center",
   minHeight: 120,
