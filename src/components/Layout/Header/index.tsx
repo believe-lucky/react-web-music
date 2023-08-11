@@ -9,7 +9,7 @@ import {
 } from "@ant-design/icons";
 import AccountContent from "./Account";
 import "./header.less";
-import Logo from "@/assets/react.svg";
+import Logo from "@/assets/images/logo.png";
 import { search } from "@/api/header";
 import { useRequest } from "ahooks";
 import { useImmer } from "use-immer";
@@ -30,7 +30,6 @@ export default function Header() {
     debounceWait: 500,
     onSuccess: (res, params) => {
       if (res.code == 200) {
-        setKeywords("");
         setSonList(res.result.songs);
       } else {
         setSonList([]);
@@ -66,7 +65,11 @@ export default function Header() {
         <div className="headerSearch">
           <Popover
             content={
-              <SearchContent sonList={sonList} handleDestory={handleDestory} />
+              <SearchContent
+                sonList={sonList}
+                handleDestory={handleDestory}
+                keywords={keywords}
+              />
             }
             arrow={false}
             trigger="click"

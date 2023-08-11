@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import { useRequest } from "ahooks";
 import { hotSearch } from "@/api/header";
 import { message } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { SearchOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./searchContentStyle.less";
+import { addHistory, clearHistory } from "@/store/headerStoreSlice";
+import { useSelector, useDispatch } from "react-redux";
 const getHotSearchList = () => {
   return hotSearch();
 };
-export default function SearchContent({ sonList, handleDestory }) {
+export default function SearchContent({ sonList, handleDestory, keywords }) {
   const [hotSearchList, setHotSearchList] = useState([]);
   const { loading, run } = useRequest(getHotSearchList, {
     manual: true,
@@ -20,13 +22,21 @@ export default function SearchContent({ sonList, handleDestory }) {
     },
     onError: (error) => message.error(error.message),
   });
+  // 从store中获取搜索历史
+  const searchHistory = useSelector(
+    (state) => state.headerStoreSlice.searchHistory
+  );
+  const dispatch = useDispatch();
   useEffect(() => {
     run();
+    keywords.trim() && dispatch(addHistory(keywords));
+
     return () => {
       handleDestory();
       setHotSearchList([]);
     };
-  }, []);
+  }, [keywords]);
+
   return (
     <div className="searchContainer">
       {(sonList.length && (
@@ -45,6 +55,20 @@ export default function SearchContent({ sonList, handleDestory }) {
         </>
       )) || (
         <>
+          <p className="hotSearch">
+            搜索历史
+            <DeleteOutlined
+              style={{ cursor: "pointer" }}
+              onClick={() => dispatch(clearHistory())}
+            />
+          </p>
+          <div className="searchHistory">
+            {searchHistory.map((item, index) => (
+              <div key={index} className="historyItem">
+                {item}
+              </div>
+            ))}
+          </div>
           <p className="hotSearch">热搜榜</p>
           <ul className="hotSearchList">
             {hotSearchList &&
