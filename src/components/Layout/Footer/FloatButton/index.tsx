@@ -7,7 +7,7 @@ const MusicIcon: React.FC = () => (
     <FloatButton
       shape="circle"
       type="primary"
-      style={{ right: 30, bottom: 300 }}
+      style={{ right: 30, bottom: 380 }}
       onClick={() => {}}
       icon={<CustomerServiceOutlined />}
     />
