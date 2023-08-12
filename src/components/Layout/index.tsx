@@ -30,6 +30,7 @@ const footerStyle: React.CSSProperties = {
   bottom: "0",
   zIndex: "1000",
   background: "rgba(0,0,0,.45)",
+  padding: "10px",
 };
 export default function LayoutContainer() {
   return (
