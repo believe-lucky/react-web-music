@@ -1,7 +1,7 @@
 import React from "react";
 import { useRequest } from "ahooks";
-import { getAlbum } from "@/api/playList";
-import { Progress } from "antd";
+import { getSong } from "@/api/playList";
+import { ConfigProvider, Slider } from "antd";
 import {
   StepBackwardOutlined,
   StepForwardOutlined,
@@ -19,7 +19,7 @@ interface albumParams {
   // type: number
 }
 const getList = function (params: albumParams) {
-  return getAlbum(params);
+  return getSong(params);
 };
 function Footer() {
   const { loading } = useRequest(getList, {
@@ -35,6 +35,11 @@ function Footer() {
     <>
       <div className="card">
         <div className="card-list">
+          <audio
+            src="http://m801.music.126.net/20230814185105/7d83deb4da535100c0fdd7beefc1c6f2/jdymusic/obj/wo3DlMOGwrbDjj7DisKw/16672040292/1f33/8dcd/e4ab/fc3c42b47e36e7b5510921aa32d67a78.mp3"
+            controls
+            style={{ display: "block" }}
+          ></audio>
           <img
             className="img"
             src="https://p1.music.126.net/hsIpIgKpGlUlaHPF-qIKcQ==/109951168735465189.jpg"
@@ -46,11 +51,14 @@ function Footer() {
               <div>time</div>
             </div>
             <div className="card-list-content-schedule">
-              <Progress
-                showInfo={false}
-                percent={99.9}
-                strokeColor={{ "0%": "#108ee9", "100%": "#87d068" }}
-              />
+              <ConfigProvider>
+                <Slider
+                  className="custom-slider"
+                  defaultValue={30}
+                  tooltip={{ open: false }}
+                  // trackStyle={{ backgroundColor: "#ec4141" }}
+                />
+              </ConfigProvider>
             </div>
           </div>
         </div>

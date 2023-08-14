@@ -9,3 +9,5 @@ declare module "*.module.less" {
 }
 
 declare module "@*";
+
+declare module "live2d-widget";
