@@ -1,16 +1,17 @@
+import { CommentOutlined, CustomerServiceOutlined } from "@ant-design/icons";
 import React from "react";
-import { CustomerServiceOutlined } from "@ant-design/icons";
 import { FloatButton } from "antd";
-
 const MusicIcon: React.FC = () => (
   <>
-    <FloatButton
-      shape="circle"
+    <FloatButton.Group
+      trigger="hover"
       type="primary"
       style={{ right: 30, bottom: 380 }}
-      onClick={() => {}}
       icon={<CustomerServiceOutlined />}
-    />
+    >
+      <FloatButton />
+      <FloatButton icon={<CommentOutlined />} />
+    </FloatButton.Group>
   </>
 );
 
