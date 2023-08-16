@@ -4,6 +4,7 @@ import "./layout.less";
 const { Header, Sider, Content, Footer } = Layout;
 
 import HeaderContainer from "./Header";
+import FooterContainer from "./Footer";
 const contentStyle: React.CSSProperties = {
   textAlign: "center",
   minHeight: 120,
@@ -22,7 +23,14 @@ const siderStyle: React.CSSProperties = {
 const footerStyle: React.CSSProperties = {
   textAlign: "center",
   color: "#fff",
-  backgroundColor: "#7dbcea",
+  position: "fixed",
+  minWidth: "940px",
+  width: "100%",
+  height: "80px",
+  bottom: "0",
+  zIndex: "1000",
+  background: "rgba(0,0,0,.45)",
+  padding: "10px",
 };
 export default function LayoutContainer() {
   return (
@@ -34,7 +42,9 @@ export default function LayoutContainer() {
         <Sider style={siderStyle}>Sider</Sider>
         <Content style={contentStyle}>Content</Content>
       </Layout>
-      <Footer style={footerStyle}>Footer</Footer>
+      <Footer style={footerStyle}>
+        <FooterContainer></FooterContainer>
+      </Footer>
     </Layout>
   );
 }

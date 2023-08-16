@@ -1,0 +1,44 @@
+.card {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+
+  &-list {
+    flex: 2;
+    display: flex;
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    .img {
+      width: 60px;
+      height: 60px;
+    }
+    &-content {
+      display: flex;
+      text-align: center;
+      align-content: center;
+      justify-content: center;
+
+      &-title {
+        display: flex;
+      }
+    }
+  }
+  &-play {
+    flex: 1;
+    display: flex;
+    gap: 30px;
+    text-align: center;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 28px;
+  }
+  &-setting {
+    flex: 2;
+  }
+}
