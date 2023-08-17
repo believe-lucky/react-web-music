@@ -15,12 +15,16 @@ import {
 } from "@ant-design/icons";
 import "./index.less";
 import baseMusicUrl from "/src/assets/images/logo.png";
+import useAudioControl from "@/hooks/useAudioControl";
+// const baseMusicUrl =
+//   "https://p1.music.126.net/hsIpIgKpGlUlaHPF-qIKcQ==/109951168735465189.jpg";
 interface albumParams {
   id: string;
 }
 const getList = function () {
   const params: albumParams = {
     id: "1950343972",
+    // id: "1877017100",
   };
   return getSong(params);
 };
@@ -31,15 +35,14 @@ const getLyricList = function () {
   return getSongLyric(params);
 };
 function Footer() {
-  const audioRef = useRef();
   const [isPlay, setIsPlay] = useState(false);
-  const [map3Url, setMap3Url] = useState();
+  const [audioSrc, setAudioSrc] = useState();
   const { loading } = useRequest(getList, {
-    onSuccess: (res, params) => {
+    onSuccess: (res: any, params) => {
       console.log(res.data[0], params);
       if (res.code === 200) {
-        setMap3Url(res.data[0].url);
-        console.log(map3Url, "url");
+        setAudioSrc(res.data[0].url);
+        console.log(audioSrc, "url");
       }
     },
     onError: (error) => message.error(error.message),
@@ -53,23 +56,28 @@ function Footer() {
     },
     onError: (error) => message.error(error.message),
   });
+
+  // audio 相关
+  const audioRef = useRef<HTMLAudioElement>({});
+  const audioControl = useAudioControl(audioRef);
   const handleAudioPlayer = (value: string) => {
     if (value === "play") {
+      audioRef.current.volume = 0.3;
       audioRef.current.play();
-      console.log(audioRef.current.currentTime, 889898);
     } else {
       audioRef.current.pause();
     }
   };
+  audioControl;
   return (
     <>
       <div className="card">
         <div className="card-list">
           <audio
             ref={audioRef}
-            src={map3Url}
+            src={audioSrc}
             controls
-            style={{ display: "none" }}
+            style={{ display: "block" }}
           ></audio>
           <img className="img" src={baseMusicUrl} alt="" />
           <div className="card-list-content">
@@ -84,7 +92,7 @@ function Footer() {
                   (
                     Math.floor(audioRef.current?.currentTime % 60) + ""
                   ).padStart(2, "0")}
-                /{/* {audioRef?.current?.duration || "0:00"} */}
+                /
                 {(Math.floor(audioRef.current?.duration / 60) + "").padStart(
                   2,
                   "0"
@@ -94,6 +102,7 @@ function Footer() {
                     2,
                     "0"
                   )}
+                {/* {audioControl.state.duration} / {audioControl.state.currentTime} */}
               </div>
             </div>
             <div className="card-list-content-schedule">
@@ -110,23 +119,26 @@ function Footer() {
         </div>
         <div className="card-play">
           <StepBackwardOutlined />
-          {isPlay ? (
-            <PauseCircleOutlined
-              onClick={() => {
-                setIsPlay(false);
-                handleAudioPlayer("pause");
-              }}
-              style={{ fontSize: "36px" }}
-            />
-          ) : (
-            <PlayCircleOutlined
-              onClick={() => {
-                setIsPlay(true);
-                handleAudioPlayer("play");
-              }}
-              style={{ fontSize: "36px" }}
-            />
-          )}
+          <div>
+            {isPlay ? (
+              <PauseCircleOutlined
+                className="card-play-start"
+                onClick={() => {
+                  setIsPlay(false);
+                  handleAudioPlayer("pause");
+                }}
+                style={{ fontSize: "36px" }}
+              />
+            ) : (
+              <PlayCircleOutlined
+                onClick={() => {
+                  setIsPlay(true);
+                  handleAudioPlayer("play");
+                }}
+                style={{ fontSize: "36px" }}
+              />
+            )}
+          </div>
           <StepForwardOutlined />
         </div>
         <div className="card-setting">
