@@ -16,6 +16,7 @@ import {
 import "./index.less";
 import baseMusicUrl from "/src/assets/images/logo.png";
 import useAudioControl from "@/hooks/useAudioControl";
+import PlayerDetail from "@/pages/player";
 // const baseMusicUrl =
 //   "https://p1.music.126.net/hsIpIgKpGlUlaHPF-qIKcQ==/109951168735465189.jpg";
 interface albumParams {
@@ -157,6 +158,7 @@ function Footer() {
             />
           </div>
         </div>
+        <PlayerDetail />
       </div>
     </>
   );
