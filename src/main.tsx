@@ -5,6 +5,8 @@ import store from "@/store";
 import { Provider } from "react-redux";
 import "./assets/css/index.css";
 import "./assets/css/iconfont.css";
+import "@/styles/index.less";
+import "@/plugins/L2Dwidget";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
