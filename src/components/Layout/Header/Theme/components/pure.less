@@ -1,0 +1,55 @@
+.pureTab {
+  .pureList {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    .pureItem {
+      width: 40px;
+      box-sizing: border-box;
+      height: 40px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      margin-right: 11px;
+      &:first-child {
+        border: 1px solid #999;
+      }
+      &:nth-of-type(6n+0) {
+        margin-right: 0;
+      }
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  .customColor  {
+    p {
+      margin: 10px 0;
+    }
+    .customerColorSlider {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      .colorBlock {
+        width: 40px;
+        height: 40px;
+        border-radius: 6px;
+        background: 
+          linear-gradient( 217deg, rgba(255, 0, 0, 0.8), rgba(255, 0, 0, 0) 70.71%),
+          linear-gradient(127deg, rgba(0, 255, 0, 0.8), rgba(0, 255, 0, 0) 70.71%),
+          linear-gradient(336deg, rgba(0, 0, 255, 0.8), rgba(0, 0, 255, 0) 70.71%);
+      }
+      .colorSlider {
+        flex: 1;
+        padding-left: 10px;
+        .ant-slider {
+          .ant-slider-rail {
+            background: linear-gradient(to right, red, orange, yellow,  green,blue, purple, red)
+          }
+        }
+        .ant-slider-horizontal .ant-slider-track {
+          background: transparent;
+        }
+      }
+    }
+  }
+}

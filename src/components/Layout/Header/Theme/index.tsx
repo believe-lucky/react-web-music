@@ -23,19 +23,19 @@ export default function Theme() {
     localStorage.setItem('theme', theme.color)
   }
   const handleClickPureItem = (theme) => {
-    console.log('click pure', theme);
+    dispatch(updateTheme(theme.color))
     localStorage.setItem('theme', theme.color)
   }
   const tabList: TabsProps['items'] = [
     {
       key: 'theme',
       label: '主题',
-      children: <ThemeTab clickItem={handleClickThemeItem}/>
+      children: activeTab == 'theme' && <ThemeTab clickItem={handleClickThemeItem}/>
     },
     {
       key: 'pure',
       label: '纯色',
-      children: <PureTab clickItem={handleClickPureItem}/>
+      children: activeTab == 'pure' && <PureTab clickItem={handleClickPureItem}/>
     },
   ]
   return (

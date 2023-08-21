@@ -38,7 +38,7 @@ export default function LayoutContainer() {
   const theme = useSelector(state => state.themeStoreSlice.theme) || localStorage.getItem('theme')
   return (
     <Layout className="layoutBox">
-      <Header id="headerContainer" style={{background: theme}}>
+      <Header id="headerContainer" style={{background: theme,color: theme=='#fff'?'#333':'#fff'}}>
         <HeaderContainer />
       </Header>
       <Layout hasSider className="layoutContent">
