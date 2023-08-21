@@ -5,11 +5,9 @@ import player from "@/assets/images/player.png";
 import plaything from "@/assets/images/player.gif";
 const PlayerDetail: React.FC = () => {
   const [open, setOpen] = useState(false);
-
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
   return (
     <>
       <Space>
@@ -21,6 +19,7 @@ const PlayerDetail: React.FC = () => {
         title="Basic Drawer"
         placement={"bottom"}
         onClose={toggleDrawer}
+        style={{ background: "pink" }}
         open={open}
         width={"100%"}
         height={"100%"}
