@@ -5,6 +5,7 @@ const { Header, Sider, Content, Footer } = Layout;
 
 import HeaderContainer from "./Header";
 import FooterContainer from "./Footer";
+import { useSelector } from 'react-redux'
 const contentStyle: React.CSSProperties = {
   textAlign: "center",
   minHeight: 120,
@@ -33,9 +34,11 @@ const footerStyle: React.CSSProperties = {
   padding: "10px",
 };
 export default function LayoutContainer() {
+  // 获取主题色
+  const theme = useSelector(state => state.themeStoreSlice.theme) || localStorage.getItem('theme')
   return (
     <Layout className="layoutBox">
-      <Header id="headerContainer">
+      <Header id="headerContainer" style={{background: theme}}>
         <HeaderContainer />
       </Header>
       <Layout hasSider className="layoutContent">

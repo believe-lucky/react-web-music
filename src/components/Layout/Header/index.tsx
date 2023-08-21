@@ -14,6 +14,7 @@ import { search } from "@/api/header";
 import { useRequest } from "ahooks";
 import { useImmer } from "use-immer";
 import SearchContent from "./Searcher";
+import Theme from "./Theme";
 interface SearchParams {
   keywords: string;
   // type: number
@@ -102,7 +103,11 @@ export default function Header() {
         </Popover>
       </div>
       <div className="headerSetting">
-        <i className="iconfont icon-Clothes"></i>
+        <Popover content={Theme} arrow={false} trigger="click">
+          <Space>
+            <i className="iconfont icon-Clothes"></i>
+          </Space>
+        </Popover>
         <SettingOutlined style={{ width: "16px", height: "16px" }} />
         <MailOutlined style={{ width: "16px", height: "16px" }} />
       </div>
