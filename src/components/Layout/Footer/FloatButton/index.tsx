@@ -1,4 +1,8 @@
-import { CommentOutlined, CustomerServiceOutlined } from "@ant-design/icons";
+import {
+  GithubFilled,
+  ZhihuCircleFilled,
+  CustomerServiceOutlined,
+} from "@ant-design/icons";
 import React from "react";
 import { FloatButton } from "antd";
 const MusicIcon: React.FC = () => (
@@ -9,8 +13,16 @@ const MusicIcon: React.FC = () => (
       style={{ right: 30, bottom: 380 }}
       icon={<CustomerServiceOutlined />}
     >
-      <FloatButton />
-      <FloatButton icon={<CommentOutlined />} />
+      <FloatButton
+        href="https://www.zhihu.com/"
+        target="_blank"
+        icon={<ZhihuCircleFilled />}
+      />
+      <FloatButton
+        href="https://github.com/believe-lucky/react-web-music"
+        target="_blank"
+        icon={<GithubFilled />}
+      />
     </FloatButton.Group>
   </>
 );

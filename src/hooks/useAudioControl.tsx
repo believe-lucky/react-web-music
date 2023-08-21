@@ -1,5 +1,15 @@
-import React, { useRef, useEffect, useState } from "react";
-
+import React, {
+  useRef,
+  useMemo,
+  useCallback,
+  useEffect,
+  useState,
+  MutableRefObject,
+} from "react";
+interface TAudioControl {
+  // 定义你的 TAudioControl 类型的属性和方法
+  // ...
+}
 const useAudioControl = (
   audioRef: MutableRefObject<HTMLAudioElement>
 ): TAudioControl => {
@@ -14,6 +24,7 @@ const useAudioControl = (
     }
 
     const audio = audioRef.current;
+    console.log(audio, "audio");
 
     const getDuration = (originDuration: number) =>
       isNaN(originDuration) ? 0 : Math.floor(originDuration);
@@ -27,7 +38,7 @@ const useAudioControl = (
 
     // 时间更新
     const onTimeUpdate = () => {
-      if (!seekingRef.current) {
+      if (!audioRef.current) {
         setCurrentTime(getCurrentTime(audio.currentTime));
       }
     };
@@ -35,6 +46,7 @@ const useAudioControl = (
     const onDurationChange = () => {
       setDuration(getDuration(audio.duration));
     };
+    console.log(duration, currentTime, "时间");
 
     audio.addEventListener("timeupdate", onTimeUpdate);
     audio.addEventListener("durationchange", onDurationChange);
@@ -42,7 +54,7 @@ const useAudioControl = (
       audio.removeEventListener("timeupdate", onTimeUpdate);
       audio.removeEventListener("durationchange", onDurationChange);
     };
-  }, []);
+  }, [audioRef]);
 
   // 跳播
   const seek = useCallback(
