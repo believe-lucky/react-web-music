@@ -1,4 +1,5 @@
 import './theme.less'
+import { useSelector } from 'react-redux'
 const themeList = [
   {
     key: 'black',
@@ -32,12 +33,13 @@ const themeList = [
   },
 ]
 export default function ThemeTab({ clickItem }) {
+  const theme = useSelector(state => state.themeStoreSlice.theme)
   return (
     <div className="themeTab">
       {
         themeList.map(item => (
           <div
-            className="themeItem"
+            className={item.color == theme ? 'themeItem active' : 'themeItem'}
             key={item.key}
             style={{ background: item.color }}
             onClick={() => clickItem(item)}

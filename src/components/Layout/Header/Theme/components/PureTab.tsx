@@ -1,6 +1,8 @@
 import './pure.less'
-import { Slider } from 'antd'
+import { Slider, ColorPicker } from 'antd'
 import { useState, } from 'react'
+import type { Color } from 'antd/es/color-picker'
+import { useSelector } from 'react-redux'
 const pureList = [
   { color: '#fff' },
   { color: '#ff5c8a' },
@@ -16,25 +18,33 @@ const pureList = [
   { color: '#fd544e' },
 ]
 
-export default function PureTab({clickItem}) {
+export default function PureTab({ clickItem }) {
 
-  const [customColor, setCustomColor] = useState({
-    main: '',
-    gray: ''
-  })
-  const handleChangeColor = (value:number) => {
+  const handleChangeColor = (value: number) => {
     console.log('滑块', value);
-    
+
   }
+  // 颜色选取器变成受控组件
+  const [colorValue, setColorValue] = useState<Color | string>('#ec4141')
+  let [hexColor, setHexColor] = useState('')
+  // 选取完毕触发父组件传递的回调
+  const onChangeComplete = (color: Color) => {
+    setColorValue(color)
+    // color.toHexString() 其他地方调用会报错
+    setHexColor(color.toHexString())
+
+    clickItem({ color: color.toHexString() })
+  }
+  const theme = useSelector(state => state.themeStoreSlice.theme)
   return (
     <div className="pureTab">
       <div className="pureList">
         {
           pureList.map((item, index) => (
             <div
-              className="pureItem"
+              className={item.color == theme ? 'pureItem active' : 'pureItem'}
               key={index}
-              style={{background: item.color}}
+              style={{ background: item.color }}
               onClick={() => clickItem(item)}
             ></div>
           ))
@@ -43,11 +53,29 @@ export default function PureTab({clickItem}) {
       <div className='customColor'>
         <p>自定义颜色</p>
         <div className="customerColorSlider">
-          <div className='colorBlock'></div>
+          <ColorPicker
+            size='large'
+            value={colorValue}
+            onChangeComplete={onChangeComplete}
+            style={{ position: 'relative' }}
+            className={theme == hexColor ? 'active' : ''}
+          />
+          {/* <div>{colorValue.toHexString().toLowerCase()}</div> */}
+          {/* <div className='colorBlock'></div>
           <div className='colorSlider'>
-            <Slider  defaultValue={20} onAfterChange={handleChangeColor} tooltip={{open: false}}/>
-            <Slider  defaultValue={20} onAfterChange={handleChangeColor} tooltip={{open: false}}/>
-          </div>
+            <Slider
+              trackStyle={{background: 'transparent'}}
+              defaultValue={20}
+              onAfterChange={handleChangeColor}
+              tooltip={{open: false}}
+            />
+            <Slider
+              trackStyle={{background: 'transparent'}}
+              defaultValue={20}
+              onAfterChange={handleChangeColor}
+              tooltip={{open: false}}
+            />
+          </div> */}
         </div>
       </div>
     </div>
