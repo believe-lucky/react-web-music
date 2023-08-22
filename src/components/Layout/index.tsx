@@ -9,11 +9,12 @@ import { useSelector } from 'react-redux';
 import { useState } from 'react'
 import { Outlet } from 'react-router-dom'
 const contentStyle: React.CSSProperties = {
-  textAlign: "center",
-  minHeight: 120,
-  lineHeight: "120px",
-  color: "#fff",
-  backgroundColor: "#108ee9",
+  // textAlign: "center",
+  // minHeight: 120,
+  // lineHeight: "120px",
+  // color: "#fff",
+  backgroundColor: "#fff",
+  padding: '20px 30px'
 };
 
 const siderStyle: React.CSSProperties = {
@@ -24,14 +25,14 @@ const siderStyle: React.CSSProperties = {
 };
 
 const footerStyle: React.CSSProperties = {
-  textAlign: "center",
+  // textAlign: "center",
   color: "#fff",
-  position: "fixed",
+  // position: "fixed",
   minWidth: "940px",
-  width: "100%",
-  height: "80px",
-  bottom: "0",
-  zIndex: "1200",
+  // width: "100%",
+  // height: "80px",
+  // bottom: "0",
+  // zIndex: "1200",
   background: "rgba(0,0,0,.45)",
   padding: "10px",
 };
