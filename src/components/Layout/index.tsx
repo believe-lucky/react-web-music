@@ -5,7 +5,8 @@ const { Header, Sider, Content, Footer } = Layout;
 
 import HeaderContainer from "./Header";
 import FooterContainer from "./Footer";
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+import { useState } from 'react'
 const contentStyle: React.CSSProperties = {
   textAlign: "center",
   minHeight: 120,
@@ -36,17 +37,23 @@ const footerStyle: React.CSSProperties = {
 export default function LayoutContainer() {
   // 获取主题色
   const theme = useSelector(state => state.themeStoreSlice.theme) || localStorage.getItem('theme')
+  
+  // 从header获取歌曲详情传给footer
+  const [songDetail, setSongDetail] = useState({})
+  const getSongDetail = (detail:string) => {
+    setSongDetail(JSON.parse(detail))
+  }
   return (
     <Layout className="layoutBox">
       <Header id="headerContainer" style={{background: theme,color: theme=='#fff'?'#333':'#fff'}}>
-        <HeaderContainer />
+        <HeaderContainer getSongDetail={getSongDetail}/>
       </Header>
       <Layout hasSider className="layoutContent">
         <Sider style={siderStyle}>Sider</Sider>
         <Content style={contentStyle}>Content</Content>
       </Layout>
       <Footer style={footerStyle}>
-        <FooterContainer></FooterContainer>
+        <FooterContainer songDetail={songDetail}></FooterContainer>
       </Footer>
     </Layout>
   );

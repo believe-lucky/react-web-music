@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useRequest } from "ahooks";
 import { getSong, getSongLyric } from "@/api/playList";
 import { ConfigProvider, Slider } from "antd";
@@ -22,23 +22,23 @@ import PlayerDetail from "@/pages/player";
 interface albumParams {
   id: string;
 }
-const getList = function () {
-  const params: albumParams = {
-    id: "1950343972",
-    // id: "1877017100",
-  };
+const getList = function (params: albumParams) {
+  // const params: albumParams = {
+  //   id: "1950343972",
+  //   // id: "1877017100",
+  // };
   return getSong(params);
 };
-const getLyricList = function () {
-  const params: albumParams = {
-    id: "1950343972",
-  };
+const getLyricList = function (params: albumParams) {
+  // const params: albumParams = {
+  //   id: "1950343972",
+  // };
   return getSongLyric(params);
 };
-function Footer() {
+function Footer({ songDetail: { id } }) {
   const [isPlay, setIsPlay] = useState(false);
   const [audioSrc, setAudioSrc] = useState();
-  const { loading } = useRequest(getList, {
+  const { loading, run } = useRequest(getList, {
     onSuccess: (res: any, params) => {
       console.log(res.data[0], params);
       if (res.code === 200) {
@@ -47,8 +47,9 @@ function Footer() {
       }
     },
     onError: (error) => message.error(error.message),
+    manual: true,
   });
-  const { loading1 } = useRequest(getLyricList, {
+  const { loading1, run: runLyric } = useRequest(getLyricList, {
     onSuccess: (res, params) => {
       console.log(res.data[0], params);
       if (res.code === 200) {
@@ -56,8 +57,15 @@ function Footer() {
       }
     },
     onError: (error) => message.error(error.message),
+    manual: true
   });
 
+  useEffect(() => {
+    if (id) {
+      run({ id })
+      runLyric({ id })
+    }
+  }, [id])
   // audio 相关
   const audioRef = useRef<HTMLAudioElement>({});
   const audioControl = useAudioControl(audioRef);
@@ -112,7 +120,7 @@ function Footer() {
                   className="custom-slider"
                   defaultValue={30}
                   tooltip={{ open: false }}
-                  // trackStyle={{ backgroundColor: "#ec4141" }}
+                // trackStyle={{ backgroundColor: "#ec4141" }}
                 />
               </ConfigProvider>
             </div>
@@ -154,7 +162,7 @@ function Footer() {
               className="custom-slider"
               defaultValue={20}
               tooltip={{ open: false }}
-              // trackStyle={{ backgroundColor: "#ec4141" }}
+            // trackStyle={{ backgroundColor: "#ec4141" }}
             />
           </div>
         </div>
