@@ -26,7 +26,8 @@
     "tests/**/*.ts",
     "tests/**/*.tsx",
     "shims-react.d.ts",
-    "src/main.tsx"
+    "src/main.tsx",
+    "src/router/index.tsx",
   ],
   "exclude": ["node_modules"]
 }

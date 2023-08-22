@@ -7,6 +7,7 @@ import HeaderContainer from "./Header";
 import FooterContainer from "./Footer";
 import { useSelector } from 'react-redux';
 import { useState } from 'react'
+import { Outlet } from 'react-router-dom'
 const contentStyle: React.CSSProperties = {
   textAlign: "center",
   minHeight: 120,
@@ -50,7 +51,10 @@ export default function LayoutContainer() {
       </Header>
       <Layout hasSider className="layoutContent">
         <Sider style={siderStyle}>Sider</Sider>
-        <Content style={contentStyle}>Content</Content>
+        <Content style={contentStyle}>
+          {/* 路由出口 */}
+          <Outlet/>
+        </Content>
       </Layout>
       <Footer style={footerStyle}>
         <FooterContainer songDetail={songDetail}></FooterContainer>
