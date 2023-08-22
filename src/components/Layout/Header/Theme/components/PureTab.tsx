@@ -24,9 +24,10 @@ export default function PureTab({ clickItem }) {
     console.log('滑块', value);
 
   }
+  const theme = useSelector(state => state.themeStoreSlice.theme) || localStorage.getItem('theme')
   // 颜色选取器变成受控组件
-  const [colorValue, setColorValue] = useState<Color | string>('#ec4141')
-  let [hexColor, setHexColor] = useState('')
+  const [colorValue, setColorValue] = useState<Color | string>(theme || '#ec4141')
+  let [hexColor, setHexColor] = useState(null)
   // 选取完毕触发父组件传递的回调
   const onChangeComplete = (color: Color) => {
     setColorValue(color)
@@ -35,7 +36,7 @@ export default function PureTab({ clickItem }) {
 
     clickItem({ color: color.toHexString() })
   }
-  const theme = useSelector(state => state.themeStoreSlice.theme)
+
   return (
     <div className="pureTab">
       <div className="pureList">
