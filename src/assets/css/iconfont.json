@@ -6,6 +6,20 @@
   "description": "网易云音乐",
   "glyphs": [
     {
+      "icon_id": "16619219",
+      "name": "play",
+      "font_class": "play",
+      "unicode": "e6cf",
+      "unicode_decimal": 59087
+    },
+    {
+      "icon_id": "37066915",
+      "name": "play-copy",
+      "font_class": "play-copy",
+      "unicode": "f469",
+      "unicode_decimal": 62569
+    },
+    {
       "icon_id": "28660968",
       "name": "Clothes",
       "font_class": "Clothes",

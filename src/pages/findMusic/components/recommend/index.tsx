@@ -3,6 +3,7 @@ import { useRequest } from 'ahooks'
 import { bannerList } from '@/api/findMusic'
 import { useImmer } from 'use-immer'
 import './recommend.less'
+import RecommendSongList from './components/recommendSongLIst/RecommendSongList'
 async function getBannerList() {
   return bannerList()
 }
@@ -37,6 +38,9 @@ export default function Recommend() {
           ))
         }
       </Carousel>
+      <div className='recommendSongList'>
+        <RecommendSongList/>
+      </div>
     </div>
   )
 }
