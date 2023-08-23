@@ -1,9 +1,7 @@
-import React from 'react';
 import StickyBox from 'react-sticky-box';
 import type { TabsProps } from 'antd';
 import { Tabs } from 'antd';
 import './index.less'
-import { bannerList } from '@/api/findMusic'
 import Recommend from './components/recommend';
 import Customization from './components/customization';
 const items = [
