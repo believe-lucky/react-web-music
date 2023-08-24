@@ -4,6 +4,7 @@ import { bannerList } from '@/api/findMusic'
 import { useImmer } from 'use-immer'
 import './recommend.less'
 import RecommendSongList from './components/recommendSongLIst/RecommendSongList'
+import HotLive from './components/hotLive/HotLive'
 async function getBannerList() {
   return bannerList()
 }
@@ -40,6 +41,7 @@ export default function Recommend() {
       </Carousel>
       <div className='recommendSongList'>
         <RecommendSongList/>
+        <HotLive/>
       </div>
     </div>
   )
