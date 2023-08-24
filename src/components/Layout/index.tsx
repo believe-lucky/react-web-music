@@ -14,7 +14,7 @@ const contentStyle: React.CSSProperties = {
   // lineHeight: "120px",
   // color: "#fff",
   backgroundColor: "#fff",
-  padding: '20px 30px'
+  padding: '20px 0 20px 30px'
 };
 
 const siderStyle: React.CSSProperties = {
@@ -27,12 +27,12 @@ const siderStyle: React.CSSProperties = {
 const footerStyle: React.CSSProperties = {
   // textAlign: "center",
   color: "#fff",
-  // position: "fixed",
+  position: "fixed",
   minWidth: "940px",
-  // width: "100%",
+  width: "100%",
   // height: "80px",
-  // bottom: "0",
-  // zIndex: "1200",
+  bottom: 0,
+  zIndex: 9999,
   background: "rgba(0,0,0,.45)",
   padding: "10px",
 };
