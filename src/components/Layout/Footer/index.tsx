@@ -17,6 +17,7 @@ import "./index.less";
 import baseMusicUrl from "/src/assets/images/logo.png";
 import useAudioControl from "@/hooks/useAudioControl";
 import PlayerDetail from "@/pages/player";
+import { useSelector } from 'react-redux'
 // const baseMusicUrl =
 //   "https://p1.music.126.net/hsIpIgKpGlUlaHPF-qIKcQ==/109951168735465189.jpg";
 interface albumParams {
@@ -59,6 +60,8 @@ function Footer({ songDetail: { id } }) {
     onError: (error) => message.error(error.message),
     manual: true
   });
+  // 推荐歌单的id
+  const getId = useSelector(state => state.emitSongId.id)
 
   useEffect(() => {
     if (id) {

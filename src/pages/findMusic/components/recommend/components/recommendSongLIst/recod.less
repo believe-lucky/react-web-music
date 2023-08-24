@@ -17,6 +17,13 @@
     &:nth-of-type(5n+0) {
       margin-right: 0;
     }
+    &:hover {
+      cursor: pointer;
+      .play {
+        opacity: 1;
+        transition: opacity linear .8s;
+      }
+    }
     .playCount {
       position: absolute;
       right: 4px;
@@ -39,6 +46,29 @@
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       display: -webkit-box;
+    }
+    .play {
+      width: 30px;
+      height: 30px;
+      background: #fff;
+      position: absolute;
+      z-index: 12;
+      border-radius: 30px;
+      right: 10px;
+      bottom: 54px;
+      opacity: 0;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border: 12px solid;
+        border-block-width: 6px;
+        border-color: transparent transparent transparent @primary-color;
+        left: 11px;
+        top: 9px;
+      }
     }
   }
 }
