@@ -42,7 +42,6 @@ export default function Header({ getSongDetail }) {
   const handleChangeKeywords = useCallback(
     async (e) => {
       setKeywords(e.target.value);
-      await run({ keywords: e.target.value });
     },
     [keywords]
   );
@@ -54,6 +53,12 @@ export default function Header({ getSongDetail }) {
   const [openSearch, setOpenSearch] = useState(false)
   const handleOpenSearch = (value:boolean) => {
     setOpenSearch(value)
+  }
+
+  const handleKeyDown = (e) => {
+    if(e.keyCode==13) {
+      run({ keywords})
+    }
   }
   return (
     <div className="headerContent">
@@ -92,6 +97,7 @@ export default function Header({ getSongDetail }) {
                 prefix={<SearchOutlined />}
                 value={keywords}
                 onChange={handleChangeKeywords}
+                onKeyDown={(e) => handleKeyDown(e)}
               />
             </Space>
           </Popover>

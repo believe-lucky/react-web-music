@@ -35,7 +35,7 @@ export default function SearchContent({ sonList, handleDestory, keywords, getSon
       handleDestory();
       setHotSearchList([]);
     };
-  }, [keywords]);
+  }, []);
   const handleClickSonList = (target) => {
     // 歌曲id
     getSongDetail(target.dataset.songdetail)
