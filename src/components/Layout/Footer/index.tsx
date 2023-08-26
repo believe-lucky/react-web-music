@@ -67,6 +67,9 @@ function Footer({ songDetail: { id } }) {
     if (id) {
       run({ id })
       runLyric({ id })
+      setTimeout(() => {
+        handleAudioPlayer('play')
+      },200)
     }
   }, [id])
   // audio 相关
