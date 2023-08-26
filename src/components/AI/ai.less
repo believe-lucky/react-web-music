@@ -8,11 +8,34 @@
           height: 300px;
           margin-bottom: 10px;
           overflow-y: auto;
-          div {
-            height: 400px;
+        }
+        div.send {
+          display: flex;
+          .ant-btn {
+            margin-left: 10px;
           }
         }
       }
     }
+  }
+}
+
+// 光标字符显示
+.typing::after {
+  content: '▌';
+}
+// 光标闪烁动画
+.blinnker::after {
+  animation: blinker 1s step-end infinite;
+}
+@keyframes blinker {
+  0% {
+    visibility: visible;
+  }
+  50% {
+    visibility: hidden;
+  }
+  100% {
+    visibility: visible;
   }
 }

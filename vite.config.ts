@@ -30,4 +30,13 @@ export default defineConfig({
       },
     },
   },
+  server: {
+    proxy: {
+      '/ai': {
+        target: 'https://wenxin.baidu.com/moduleApi/portal/api',
+        changeOrigin: true,
+        rewrite: path => path.replace(/^\/ai/, '')
+      }
+    }
+  },
 });
