@@ -23,7 +23,7 @@ const searchSon = function (params: SearchParams) {
   return search(params);
 };
 
-export default function Header({ getSongDetail }) {
+export default function Header() {
   const [keywords, setKeywords] = useState("");
   const [sonList, setSonList] = useImmer([]);
   const { loading, run } = useRequest(searchSon, {
@@ -51,13 +51,13 @@ export default function Header({ getSongDetail }) {
   };
   // 点击歌曲后，自动关闭搜索的弹窗
   const [openSearch, setOpenSearch] = useState(false)
-  const handleOpenSearch = (value:boolean) => {
+  const handleOpenSearch = (value: boolean) => {
     setOpenSearch(value)
   }
 
   const handleKeyDown = (e) => {
-    if(e.keyCode==13) {
-      run({ keywords})
+    if (e.keyCode == 13) {
+      run({ keywords })
     }
   }
   return (
@@ -80,7 +80,6 @@ export default function Header({ getSongDetail }) {
                 sonList={sonList}
                 handleDestory={handleDestory}
                 keywords={keywords}
-                getSongDetail={getSongDetail}
                 handleOpenSearch={handleOpenSearch}
               />
             }

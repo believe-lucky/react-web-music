@@ -36,7 +36,7 @@ const getLyricList = function (params: albumParams) {
   // };
   return getSongLyric(params);
 };
-function Footer({ songDetail: { id } }) {
+function Footer() {
   const [isPlay, setIsPlay] = useState(false);
   const [audioSrc, setAudioSrc] = useState();
   const { loading, run } = useRequest(getList, {
@@ -60,19 +60,19 @@ function Footer({ songDetail: { id } }) {
     onError: (error) => message.error(error.message),
     manual: true
   });
-  // 推荐歌单的详情
-  const getDetail = useSelector(state => state.emitSongId.songDetail)
-  
+  // 获取歌曲、歌单的详情
+  const getSongDetail = useSelector(state => state.emitSong.songDetail)
+
   useEffect(() => {
-    console.log('推荐歌单详情--->',getDetail);
-    if (id) {
-      run({ id })
-      runLyric({ id })
+    console.log('获取歌曲详情--->', getSongDetail);
+    if (getSongDetail.hasOwnProperty('id')) {
+      run({ id: getSongDetail.id })
+      runLyric({ id: getSongDetail.id })
       setTimeout(() => {
         handleAudioPlayer('play')
-      },200)
+      }, 200)
     }
-  }, [id, getDetail])
+  }, [getSongDetail])
   // audio 相关
   const audioRef = useRef<HTMLAudioElement>({});
   const audioControl = useAudioControl(audioRef);
@@ -110,9 +110,9 @@ function Footer({ songDetail: { id } }) {
                   ).padStart(2, "0")}
                 /
                 {(Math.floor(audioRef.current?.duration / 60) + "").padStart(
-                  2,
-                  "0"
-                ) +
+                    2,
+                    "0"
+                  ) +
                   ":" +
                   (Math.floor(audioRef.current?.duration % 60) + "").padStart(
                     2,
@@ -146,14 +146,14 @@ function Footer({ songDetail: { id } }) {
                 style={{ fontSize: "36px" }}
               />
             ) : (
-              <PlayCircleOutlined
-                onClick={() => {
-                  setIsPlay(true);
-                  handleAudioPlayer("play");
-                }}
-                style={{ fontSize: "36px" }}
-              />
-            )}
+                <PlayCircleOutlined
+                  onClick={() => {
+                    setIsPlay(true);
+                    handleAudioPlayer("play");
+                  }}
+                  style={{ fontSize: "36px" }}
+                />
+              )}
           </div>
           <StepForwardOutlined />
         </div>

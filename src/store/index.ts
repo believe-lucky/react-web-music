@@ -2,12 +2,12 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import headerStoreSlice from "@/store/headerStoreSlice";
 import themeStoreSlice from "./themeStoreSlice";
-import emitSongId from './emitSongIdSlice'
+import emitSong from './emitSongSlice'
 
 export default configureStore({
   reducer: {
     headerStoreSlice,
     themeStoreSlice,
-    emitSongId
+    emitSong,
   },
 });

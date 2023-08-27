@@ -6,10 +6,12 @@ import { SearchOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./searchContentStyle.less";
 import { addHistory, clearHistory } from "@/store/headerStoreSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { emitDetail } from '@/store/emitSongSlice'
+
 const getHotSearchList = () => {
   return hotSearch();
 };
-export default function SearchContent({ sonList, handleDestory, keywords, getSongDetail, handleOpenSearch }) {
+export default function SearchContent({ sonList, handleDestory, keywords, handleOpenSearch }) {
   const [hotSearchList, setHotSearchList] = useState([]);
   const { loading, run } = useRequest(getHotSearchList, {
     manual: true,
@@ -37,8 +39,8 @@ export default function SearchContent({ sonList, handleDestory, keywords, getSon
     };
   }, []);
   const handleClickSonList = (target) => {
-    // 歌曲id
-    getSongDetail(target.dataset.songdetail)
+    dispatch(emitDetail(JSON.parse(target.dataset.songdetail)))
+    // 关闭popover
     handleOpenSearch(false)
   }
   return (

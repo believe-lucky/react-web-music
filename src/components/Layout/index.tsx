@@ -39,26 +39,20 @@ const footerStyle: React.CSSProperties = {
 export default function LayoutContainer() {
   // 获取主题色
   const theme = useSelector(state => state.themeStoreSlice.theme) || localStorage.getItem('theme')
-  
-  // 从header获取歌曲详情传给footer
-  const [songDetail, setSongDetail] = useState({})
-  const getSongDetail = (detail:string) => {
-    setSongDetail(JSON.parse(detail))
-  }
   return (
     <Layout className="layoutBox">
-      <Header id="headerContainer" style={{background: theme,color: theme=='#fff'?'#333':'#fff'}}>
-        <HeaderContainer getSongDetail={getSongDetail}/>
+      <Header id="headerContainer" style={{ background: theme, color: theme == '#fff' ? '#333' : '#fff' }}>
+        <HeaderContainer />
       </Header>
       <Layout hasSider className="layoutContent">
         <Sider style={siderStyle}>Sider</Sider>
         <Content style={contentStyle}>
           {/* 路由出口 */}
-          <Outlet/>
+          <Outlet />
         </Content>
       </Layout>
       <Footer style={footerStyle}>
-        <FooterContainer songDetail={songDetail}></FooterContainer>
+        <FooterContainer></FooterContainer>
       </Footer>
     </Layout>
   );
