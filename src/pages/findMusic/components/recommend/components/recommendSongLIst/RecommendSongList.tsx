@@ -4,7 +4,7 @@ import { useRequest } from 'ahooks'
 import { recommendSongList } from '@/api/findMusic'
 import { useImmer } from 'use-immer'
 import { Image } from 'antd'
-import { emitId } from '@/store/emitSongIdSlice'
+import { emitDetail } from '@/store/emitSongIdSlice'
 import { useDispatch } from 'react-redux'
 
 function getRecodSongList() {
@@ -18,7 +18,7 @@ export default function RecommendSongList() {
       if (res.code == 200) {
         const list = res.result.slice(0, 10)
         list.forEach(item => {
-          item.playCount = Math.floor(item.playCount/10000) + '万'
+          item.formatPlayCount = Math.floor(item.playCount/10000) + '万'
         })
         setSongList(list)
       } else {
@@ -27,8 +27,8 @@ export default function RecommendSongList() {
     }
   })
   const dispatch = useDispatch()
-  const clickRecoItem = (id) => {
-    dispatch(emitId(id))
+  const clickRecoItem = (detail) => {
+    dispatch(emitDetail(detail))
   }
   return (
     <>
@@ -40,11 +40,11 @@ export default function RecommendSongList() {
             <div
               className='recoItem'
               key={item.id}
-              onClick={() => clickRecoItem(item.id)}
+              onClick={() => clickRecoItem(item)}
             >
               <div className='playCount'>
                 <i className='iconfont icon-play'></i>
-                {item.playCount}
+                {item.formatPlayCount}
               </div>
               <div className="play"></div>
               <Image width='100%' src={item.picUrl} preview={false} />

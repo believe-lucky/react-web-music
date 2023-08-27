@@ -60,10 +60,11 @@ function Footer({ songDetail: { id } }) {
     onError: (error) => message.error(error.message),
     manual: true
   });
-  // 推荐歌单的id
-  const getId = useSelector(state => state.emitSongId.id)
-
+  // 推荐歌单的详情
+  const getDetail = useSelector(state => state.emitSongId.songDetail)
+  
   useEffect(() => {
+    console.log('推荐歌单详情--->',getDetail);
     if (id) {
       run({ id })
       runLyric({ id })
@@ -71,7 +72,7 @@ function Footer({ songDetail: { id } }) {
         handleAudioPlayer('play')
       },200)
     }
-  }, [id])
+  }, [id, getDetail])
   // audio 相关
   const audioRef = useRef<HTMLAudioElement>({});
   const audioControl = useAudioControl(audioRef);

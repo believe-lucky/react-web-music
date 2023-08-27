@@ -3,15 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 export const emitSongId = createSlice({
   name: 'songId',
   initialState: {
-    id: ''
+    songDetail: {},
   },
   reducers: {
-    emitId: (state, payload) => {
-      state.id = payload.payload
+    emitDetail: (state, payload) => {
+      state.songDetail = payload.payload
     }
   }
 })
 
-export const { emitId } = emitSongId.actions;
+export const { emitDetail } = emitSongId.actions;
 
 export default emitSongId.reducer
