@@ -4,6 +4,7 @@ import { lazy} from 'react'
 const Layout = lazy(() => import("@/components/Layout/index"))
 const Setting = lazy(() => import("@/pages/setting"))
 const FindMusic = lazy(() => import("@/pages/findMusic"))
+const SongListDetail = lazy(() => import("@/pages/findMusic/SongListDetail"))
 
 const router = createBrowserRouter([
   // 路由重定向
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
       {
         path: "/find",
         element: <FindMusic />,
+      },
+      {
+        path: '/songlistdetail/:id',
+        element: <SongListDetail />
       },
       {
         path: "/setting",

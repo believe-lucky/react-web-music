@@ -4,8 +4,7 @@ import { useRequest } from 'ahooks'
 import { recommendSongList } from '@/api/findMusic'
 import { useImmer } from 'use-immer'
 import { Image } from 'antd'
-import { emitDetail } from '@/store/emitSongIdSlice'
-import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 function getRecodSongList() {
   return recommendSongList()
@@ -18,7 +17,7 @@ export default function RecommendSongList() {
       if (res.code == 200) {
         const list = res.result.slice(0, 10)
         list.forEach(item => {
-          item.formatPlayCount = Math.floor(item.playCount/10000) + '万'
+          item.formatPlayCount = Math.floor(item.playCount / 10000) + '万'
         })
         setSongList(list)
       } else {
@@ -26,9 +25,10 @@ export default function RecommendSongList() {
       }
     }
   })
-  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const clickRecoItem = (detail) => {
-    dispatch(emitDetail(detail))
+    console.log('获取对应歌单列表--->', detail);
+    navigate(`/songlistdetail/${detail.id}`)
   }
   return (
     <>
