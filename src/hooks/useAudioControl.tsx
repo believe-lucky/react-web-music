@@ -1,86 +1,89 @@
-import React, {
-  useRef,
-  useMemo,
-  useCallback,
-  useEffect,
-  useState,
-  MutableRefObject,
-} from "react";
+import { MutableRefObject, useEffect, useState } from "react";
+
 interface TAudioControl {
-  // 定义你的 TAudioControl 类型的属性和方法
-  // ...
+  play: () => void;
+  pause: () => void;
+  formattedCurrentTime: string;
+  formattedDuration: string;
+  isPlay: boolean;
+  volume: number;
+  setAudioVolume: (value: number) => void;
+  currentTime: number;
+  setAudioTime: (time: number) => void;
 }
+
 const useAudioControl = (
   audioRef: MutableRefObject<HTMLAudioElement>
 ): TAudioControl => {
-  // 音频时长
-  const [duration, setDuration] = useState(0);
-  // 播放时间
-  const [currentTime, setCurrentTime] = useState(0);
+  const [formattedCurrentTime, setFormattedCurrentTime] = useState("0:00");
+  const [formattedDuration, setFormattedDuration] = useState("0:00");
+  const [isPlay, setIsPlay] = useState(false);
+  const [volume, setVolume] = useState(0.3); // 默认音量为 1
 
+  const formatTime = (time: number) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60);
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+  };
+  // 播放
+  const play = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+      setIsPlay(true);
+    }
+  };
+  // 暂停
+  const pause = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      setIsPlay(false);
+    }
+  };
+
+  // 音量
+  const setAudioVolume = (value: number) => {
+    if (audioRef.current) {
+      audioRef.current.volume = value / 100;
+      setVolume(value);
+    }
+  };
+  const setAudioTime = (time: number) => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = time;
+      setFormattedCurrentTime(time);
+    }
+  };
   useEffect(() => {
     if (!audioRef.current) {
       return;
     }
-
     const audio = audioRef.current;
-    console.log(audio, "audio");
-
-    const getDuration = (originDuration: number) =>
-      isNaN(originDuration) ? 0 : Math.floor(originDuration);
-    const getCurrentTime = (originCurrentTime: number) =>
-      isNaN(originCurrentTime) ? 0 : Math.floor(originCurrentTime);
-
-    // 初始化音量
-    const { duration, currentTime, volume, muted, playbackRate } = audio;
-    setDuration(getDuration(duration));
-    setCurrentTime(getCurrentTime(currentTime));
-
-    // 时间更新
-    const onTimeUpdate = () => {
-      if (!audioRef.current) {
-        setCurrentTime(getCurrentTime(audio.currentTime));
-      }
+    audio.volume = 0.3;
+    const handleTimeUpdate = () => {
+      setFormattedCurrentTime(formatTime(audio.currentTime));
     };
-    // 时长改变
-    const onDurationChange = () => {
-      setDuration(getDuration(audio.duration));
-    };
-    console.log(duration, currentTime, "时间");
 
-    audio.addEventListener("timeupdate", onTimeUpdate);
-    audio.addEventListener("durationchange", onDurationChange);
+    const handleDurationChange = () => {
+      setFormattedDuration(formatTime(audio.duration));
+    };
+    audio.addEventListener("timeupdate", handleTimeUpdate);
+    audio.addEventListener("durationchange", handleDurationChange);
     return () => {
-      audio.removeEventListener("timeupdate", onTimeUpdate);
-      audio.removeEventListener("durationchange", onDurationChange);
+      audio.removeEventListener("timeupdate", handleTimeUpdate);
+      audio.removeEventListener("durationchange", handleDurationChange);
     };
   }, [audioRef]);
 
-  // 跳播
-  const seek = useCallback(
-    (targetTime: number) => {
-      if (audioRef.current.fastSeek) {
-        audioRef.current.fastSeek(targetTime);
-      } else {
-        audioRef.current.currentTime = targetTime;
-      }
-    },
-    [audioRef]
-  );
-
-  return useMemo(
-    () => ({
-      state: {
-        duration,
-        currentTime,
-      },
-      action: {
-        seek,
-        updateCurrentTime: setCurrentTime,
-      },
-    }),
-    []
-  );
+  return {
+    play,
+    pause,
+    formattedCurrentTime,
+    formattedDuration,
+    isPlay,
+    volume,
+    setAudioVolume,
+    setAudioTime,
+  };
 };
 
 export default useAudioControl;

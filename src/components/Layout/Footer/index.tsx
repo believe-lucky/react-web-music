@@ -17,7 +17,7 @@ import "./index.less";
 import baseMusicUrl from "/src/assets/images/logo.png";
 import useAudioControl from "@/hooks/useAudioControl";
 import PlayerDetail from "@/pages/player";
-import { useSelector } from 'react-redux'
+import { useSelector } from "react-redux";
 // const baseMusicUrl =
 //   "https://p1.music.126.net/hsIpIgKpGlUlaHPF-qIKcQ==/109951168735465189.jpg";
 interface albumParams {
@@ -36,8 +36,8 @@ const getLyricList = function (params: albumParams) {
   // };
   return getSongLyric(params);
 };
-function Footer({ songDetail: { id } }) {
-  const [isPlay, setIsPlay] = useState(false);
+function Footer({ songDetail: { id = "1950343972" } }) {
+  console.log({ songDetail: { id } }, 9999);
   const [audioSrc, setAudioSrc] = useState();
   const { loading, run } = useRequest(getList, {
     onSuccess: (res: any, params) => {
@@ -58,36 +58,40 @@ function Footer({ songDetail: { id } }) {
       }
     },
     onError: (error) => message.error(error.message),
-    manual: true
+    manual: true,
   });
   // 推荐歌单的id
-  const getId = useSelector(state => state.emitSongId.id)
+  const getId = useSelector((state) => state.emitSongId.id);
 
   useEffect(() => {
     if (id) {
-      run({ id })
-      runLyric({ id })
+      run({ id });
+      runLyric({ id });
       setTimeout(() => {
-        handleAudioPlayer('play')
-      },200)
+        // audioControl.play;
+      }, 200);
     }
-  }, [id])
+  }, [id]);
   // audio 相关
-  const audioRef = useRef<HTMLAudioElement>({});
+  const audioRef = useRef<HTMLAudioElement>(null);
   const audioControl = useAudioControl(audioRef);
-  const handleAudioPlayer = (value: string) => {
-    if (value === "play") {
-      audioRef.current.volume = 0.3;
-      audioRef.current.play();
-    } else {
-      audioRef.current.pause();
+  // 访问属性
+  const isPlay = audioControl.isPlay;
+  const duration = audioControl.formattedDuration;
+  const currentTime = audioControl.formattedCurrentTime;
+  const handleMuted = (value: boolean) => {
+    if (audioRef.current) {
+      audioRef.current.muted = value;
     }
   };
-  audioControl;
   // 歌词页面
   const [isPlayerDetailOpen, setIsPlayerDetailOpen] = useState(false);
   const togglePlayerDetail = () => {
     setIsPlayerDetailOpen(!isPlayerDetailOpen);
+  };
+  // setAudioVolume
+  const setAudioVolume = (v) => {
+    audioControl.setAudioVolume(v);
   };
   return (
     <>
@@ -109,25 +113,7 @@ function Footer({ songDetail: { id } }) {
             <div className="card-list-content-title">
               <div> 罗刹海市 刀郎</div>
               <div>
-                {(Math.floor(audioRef.current?.currentTime / 60) + "").padStart(
-                  2,
-                  "0"
-                ) +
-                  ":" +
-                  (
-                    Math.floor(audioRef.current?.currentTime % 60) + ""
-                  ).padStart(2, "0")}
-                /
-                {(Math.floor(audioRef.current?.duration / 60) + "").padStart(
-                  2,
-                  "0"
-                ) +
-                  ":" +
-                  (Math.floor(audioRef.current?.duration % 60) + "").padStart(
-                    2,
-                    "0"
-                  )}
-                {/* {audioControl.state.duration} / {audioControl.state.currentTime} */}
+                {currentTime} / {duration}
               </div>
             </div>
             <div className="card-list-content-schedule">
@@ -136,7 +122,7 @@ function Footer({ songDetail: { id } }) {
                   className="custom-slider"
                   defaultValue={30}
                   tooltip={{ open: false }}
-                // trackStyle={{ backgroundColor: "#ec4141" }}
+                  // trackStyle={{ backgroundColor: "#ec4141" }}
                 />
               </ConfigProvider>
             </div>
@@ -148,18 +134,12 @@ function Footer({ songDetail: { id } }) {
             {isPlay ? (
               <PauseCircleOutlined
                 className="card-play-start"
-                onClick={() => {
-                  setIsPlay(false);
-                  handleAudioPlayer("pause");
-                }}
+                onClick={audioControl.pause}
                 style={{ fontSize: "36px" }}
               />
             ) : (
               <PlayCircleOutlined
-                onClick={() => {
-                  setIsPlay(true);
-                  handleAudioPlayer("play");
-                }}
+                onClick={audioControl.play}
                 style={{ fontSize: "36px" }}
               />
             )}
@@ -172,13 +152,13 @@ function Footer({ songDetail: { id } }) {
           <MessageOutlined />
           <AlignRightOutlined />
           <div style={{ display: "flex" }}>
-            <SoundOutlined />
+            <SoundOutlined onClick={() => handleMuted(false)} />
+            <div onClick={() => handleMuted(true)}>静音</div>
             <Slider
               style={{ width: 60, marginLeft: 12 }}
+              defaultValue={30}
               className="custom-slider"
-              defaultValue={20}
-              tooltip={{ open: false }}
-            // trackStyle={{ backgroundColor: "#ec4141" }}
+              onChange={setAudioVolume}
             />
           </div>
         </div>
