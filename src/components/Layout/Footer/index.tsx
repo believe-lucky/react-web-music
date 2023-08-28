@@ -18,6 +18,8 @@ import baseMusicUrl from "/src/assets/images/logo.png";
 import useAudioControl from "@/hooks/useAudioControl";
 import PlayerDetail from "@/pages/player";
 import { useSelector } from "react-redux";
+import onVolumeSvg from "@/assets/images/yinliang.png";
+import offVolumeSvg from "@/assets/images/guanbiyinliang.png";
 // const baseMusicUrl =
 //   "https://p1.music.126.net/hsIpIgKpGlUlaHPF-qIKcQ==/109951168735465189.jpg";
 interface albumParams {
@@ -79,10 +81,10 @@ function Footer({ songDetail: { id = "1950343972" } }) {
   const isPlay = audioControl.isPlay;
   const duration = audioControl.formattedDuration;
   const currentTime = audioControl.formattedCurrentTime;
-  const handleMuted = (value: boolean) => {
-    if (audioRef.current) {
-      audioRef.current.muted = value;
-    }
+  const sliderValue = audioControl.sliderValue;
+  const isMuted = audioControl.isMuted;
+  const handleSliderChange = (value: string) => {
+    audioControl.sliderValue = value;
   };
   // 歌词页面
   const [isPlayerDetailOpen, setIsPlayerDetailOpen] = useState(false);
@@ -90,7 +92,7 @@ function Footer({ songDetail: { id = "1950343972" } }) {
     setIsPlayerDetailOpen(!isPlayerDetailOpen);
   };
   // setAudioVolume
-  const setAudioVolume = (v) => {
+  const setAudioVolume = (v: number) => {
     audioControl.setAudioVolume(v);
   };
   return (
@@ -101,7 +103,7 @@ function Footer({ songDetail: { id = "1950343972" } }) {
             ref={audioRef}
             src={audioSrc}
             controls
-            style={{ display: "block" }}
+            style={{ display: "none" }}
           ></audio>
           <img
             className="img"
@@ -120,9 +122,10 @@ function Footer({ songDetail: { id = "1950343972" } }) {
               <ConfigProvider>
                 <Slider
                   className="custom-slider"
-                  defaultValue={30}
+                  defaultValue={0}
+                  value={sliderValue}
+                  onChange={() => handleSliderChange}
                   tooltip={{ open: false }}
-                  // trackStyle={{ backgroundColor: "#ec4141" }}
                 />
               </ConfigProvider>
             </div>
@@ -151,9 +154,22 @@ function Footer({ songDetail: { id = "1950343972" } }) {
           <DownloadOutlined />
           <MessageOutlined />
           <AlignRightOutlined />
-          <div style={{ display: "flex" }}>
-            <SoundOutlined onClick={() => handleMuted(false)} />
-            <div onClick={() => handleMuted(true)}>静音</div>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            {isMuted ? (
+              <img
+                style={{ width: "20px" }}
+                src={offVolumeSvg}
+                onClick={audioControl.unmute}
+                alt=""
+              />
+            ) : (
+              <img
+                style={{ width: "26px" }}
+                src={onVolumeSvg}
+                onClick={audioControl.mute}
+                alt=""
+              />
+            )}
             <Slider
               style={{ width: 60, marginLeft: 12 }}
               defaultValue={30}

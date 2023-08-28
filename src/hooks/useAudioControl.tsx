@@ -8,8 +8,10 @@ interface TAudioControl {
   isPlay: boolean;
   volume: number;
   setAudioVolume: (value: number) => void;
-  currentTime: number;
-  setAudioTime: (time: number) => void;
+  isMuted: boolean;
+  mute: () => void;
+  unmute: () => void;
+  sliderValue: number;
 }
 
 const useAudioControl = (
@@ -18,7 +20,9 @@ const useAudioControl = (
   const [formattedCurrentTime, setFormattedCurrentTime] = useState("0:00");
   const [formattedDuration, setFormattedDuration] = useState("0:00");
   const [isPlay, setIsPlay] = useState(false);
-  const [volume, setVolume] = useState(0.3); // 默认音量为 1
+  const [volume, setVolume] = useState(0.3); // 默认音量为 0.3
+  const [isMuted, setIsMuted] = useState(false);
+  const [sliderValue, setSliderValue] = useState(0);
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
@@ -47,10 +51,17 @@ const useAudioControl = (
       setVolume(value);
     }
   };
-  const setAudioTime = (time: number) => {
+  const mute = () => {
     if (audioRef.current) {
-      audioRef.current.currentTime = time;
-      setFormattedCurrentTime(time);
+      audioRef.current.muted = true;
+      setIsMuted(true);
+    }
+  };
+
+  const unmute = () => {
+    if (audioRef.current) {
+      audioRef.current.muted = false;
+      setIsMuted(false);
     }
   };
   useEffect(() => {
@@ -74,6 +85,10 @@ const useAudioControl = (
     };
   }, [audioRef]);
 
+  useEffect(() => {
+    setSliderValue(audioRef.current.currentTime);
+  }, [audioRef]);
+
   return {
     play,
     pause,
@@ -82,7 +97,10 @@ const useAudioControl = (
     isPlay,
     volume,
     setAudioVolume,
-    setAudioTime,
+    isMuted,
+    mute,
+    unmute,
+    sliderValue,
   };
 };
 

@@ -11,3 +11,8 @@ declare module "*.module.less" {
 declare module "@*";
 
 declare module "live2d-widget";
+
+declare module "*.svg" {
+  const content: any;
+  export default content;
+}
