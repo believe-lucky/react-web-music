@@ -37,26 +37,34 @@ const getLyricList = function (params: albumParams) {
   // };
   return getSongLyric(params);
 };
-function Footer({ songDetail: { id } }) {
+function Footer({ songDetail: { id = 2031881406 } }) {
   const [audioSrc, setAudioSrc] = useState();
   const { loading, run } = useRequest(getList, {
     onSuccess: (res: any, params) => {
-      audioControl.pause;
-      console.log(res.data[0], params);
       if (res.code === 200) {
         setAudioSrc(res.data[0].url);
-        console.log(audioSrc, "url");
-        console.log(audioControl, 999);
       }
     },
     onError: (error) => message.error(error.message),
     manual: true,
   });
+  const [klyRic, setKlyRic] = useState("");
   const { loading1, run: runLyric } = useRequest(getLyricList, {
     onSuccess: (res, params) => {
-      console.log(res.data[0], params);
       if (res.code === 200) {
-        console.log(res.klyric, "url");
+        const lyric = res.lrc.lyric;
+        let lyricList = [];
+        lyric
+          .split(/[\n]/) // 截取中括号
+          .forEach((item) => {
+            const temp: Array<string> = item.split(/\[(.+?)\]/);
+            lyricList.push({
+              time: temp[1], // 时间
+              lyc: temp[2], //歌词内容
+            });
+          });
+        lyricList = lyricList.filter((v) => v["lyc"]); // 去除无歌词内容
+        setKlyRic(lyricList);
       }
     },
     onError: (error) => message.error(error.message),
@@ -67,11 +75,12 @@ function Footer({ songDetail: { id } }) {
 
   useEffect(() => {
     if (id) {
+      console.log(id, "id");
       run({ id });
       runLyric({ id });
       setTimeout(() => {
         // audioControl.play();
-      }, 200);
+      }, 0);
     }
   }, [id]);
   // audio 相关
@@ -187,6 +196,8 @@ function Footer({ songDetail: { id } }) {
         <PlayerDetail
           isOpen={isPlayerDetailOpen}
           toggleDrawer={togglePlayerDetail}
+          playKlyRic={klyRic}
+          isPlay={isPlay}
         />
       </div>
     </>
