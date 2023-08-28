@@ -23,7 +23,7 @@ const searchSon = function (params: SearchParams) {
   return search(params);
 };
 
-export default function Header() {
+export default function Header({ getSongDetail }) {
   const [keywords, setKeywords] = useState("");
   const [sonList, setSonList] = useImmer([]);
   const { loading, run } = useRequest(searchSon, {
@@ -42,7 +42,6 @@ export default function Header() {
   const handleChangeKeywords = useCallback(
     async (e) => {
       setKeywords(e.target.value);
-      await run({ keywords: e.target.value });
     },
     [keywords]
   );
@@ -50,6 +49,17 @@ export default function Header() {
   const handleDestory = () => {
     setSonList([]);
   };
+  // 点击歌曲后，自动关闭搜索的弹窗
+  const [openSearch, setOpenSearch] = useState(false)
+  const handleOpenSearch = (value:boolean) => {
+    setOpenSearch(value)
+  }
+
+  const handleKeyDown = (e) => {
+    if(e.keyCode==13) {
+      run({ keywords})
+    }
+  }
   return (
     <div className="headerContent">
       <div className="logo">
@@ -70,12 +80,16 @@ export default function Header() {
                 sonList={sonList}
                 handleDestory={handleDestory}
                 keywords={keywords}
+                getSongDetail={getSongDetail}
+                handleOpenSearch={handleOpenSearch}
               />
             }
             arrow={false}
             trigger="click"
             overlayClassName="searchPop"
             destroyTooltipOnHide
+            open={openSearch}
+            onOpenChange={handleOpenSearch}
           >
             <Space>
               <Input
@@ -83,6 +97,7 @@ export default function Header() {
                 prefix={<SearchOutlined />}
                 value={keywords}
                 onChange={handleChangeKeywords}
+                onKeyDown={(e) => handleKeyDown(e)}
               />
             </Space>
           </Popover>

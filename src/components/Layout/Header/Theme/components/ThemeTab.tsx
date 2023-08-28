@@ -33,7 +33,7 @@ const themeList = [
   },
 ]
 export default function ThemeTab({ clickItem }) {
-  const theme = useSelector(state => state.themeStoreSlice.theme)
+  const theme = useSelector(state => state.themeStoreSlice.theme) || localStorage.getItem('theme')
   return (
     <div className="themeTab">
       {
