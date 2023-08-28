@@ -70,6 +70,11 @@ function Footer() {
     }
   };
   audioControl;
+  // 歌词页面
+  const [isPlayerDetailOpen, setIsPlayerDetailOpen] = useState(false);
+  const togglePlayerDetail = () => {
+    setIsPlayerDetailOpen(!isPlayerDetailOpen);
+  };
   return (
     <>
       <div className="card">
@@ -80,7 +85,12 @@ function Footer() {
             controls
             style={{ display: "block" }}
           ></audio>
-          <img className="img" src={baseMusicUrl} alt="" />
+          <img
+            className="img"
+            onClick={togglePlayerDetail}
+            src={baseMusicUrl}
+            alt=""
+          />
           <div className="card-list-content">
             <div className="card-list-content-title">
               <div> 罗刹海市 刀郎</div>
@@ -158,7 +168,10 @@ function Footer() {
             />
           </div>
         </div>
-        <PlayerDetail />
+        <PlayerDetail
+          isOpen={isPlayerDetailOpen}
+          toggleDrawer={togglePlayerDetail}
+        />
       </div>
     </>
   );

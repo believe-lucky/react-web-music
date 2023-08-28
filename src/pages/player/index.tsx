@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Drawer, Space } from "antd";
 import styles from "./style.module.less";
 import player from "@/assets/images/player.png";
 import plaything from "@/assets/images/player.gif";
-const PlayerDetail: React.FC = () => {
-  const [open, setOpen] = useState(false);
-  const toggleDrawer = () => {
-    setOpen(!open);
-  };
+interface PlayerDetailProps {
+  isOpen: boolean;
+  toggleDrawer: () => void;
+}
+const PlayerDetail: React.FC<PlayerDetailProps> = ({
+  isOpen,
+  toggleDrawer,
+}) => {
   return (
     <>
       <Space>
         <Button type="primary" onClick={toggleDrawer}>
-          {!open ? "Open" : "Close"}
+          {!isOpen ? "Open" : "Close"}
         </Button>
       </Space>
       <Drawer
@@ -20,7 +23,7 @@ const PlayerDetail: React.FC = () => {
         placement={"bottom"}
         onClose={toggleDrawer}
         style={{ background: "pink" }}
-        open={open}
+        open={isOpen}
         width={"100%"}
         height={"100%"}
       >
