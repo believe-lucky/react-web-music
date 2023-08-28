@@ -1,3 +1,4 @@
+import { message } from "antd";
 import { MutableRefObject, useEffect, useState, useCallback } from "react";
 
 interface TAudioControl {
@@ -32,6 +33,7 @@ const useAudioControl = (
   };
 
   const play = () => {
+    if (!audioRef.current?.src) return message.error("你先添加音乐");
     if (audioRef.current) {
       audioRef.current.play();
       setIsPlay(true);

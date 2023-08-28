@@ -37,15 +37,16 @@ const getLyricList = function (params: albumParams) {
   // };
   return getSongLyric(params);
 };
-function Footer({ songDetail: { id = "1950343972" } }) {
-  console.log({ songDetail: { id } }, 9999);
+function Footer({ songDetail: { id } }) {
   const [audioSrc, setAudioSrc] = useState();
   const { loading, run } = useRequest(getList, {
     onSuccess: (res: any, params) => {
+      audioControl.pause;
       console.log(res.data[0], params);
       if (res.code === 200) {
         setAudioSrc(res.data[0].url);
         console.log(audioSrc, "url");
+        console.log(audioControl, 999);
       }
     },
     onError: (error) => message.error(error.message),
@@ -69,7 +70,7 @@ function Footer({ songDetail: { id = "1950343972" } }) {
       run({ id });
       runLyric({ id });
       setTimeout(() => {
-        // audioControl.play;
+        // audioControl.play();
       }, 200);
     }
   }, [id]);
@@ -117,7 +118,7 @@ function Footer({ songDetail: { id = "1950343972" } }) {
           />
           <div className="card-list-content">
             <div className="card-list-content-title">
-              <div> 罗刹海市 刀郎</div>
+              <div> 云音乐 </div>
               <div>
                 {currentTime} / {duration}
               </div>
@@ -139,15 +140,15 @@ function Footer({ songDetail: { id = "1950343972" } }) {
         <div className="card-play">
           <StepBackwardOutlined />
           <div>
-            {isPlay ? (
-              <PauseCircleOutlined
-                className="card-play-start"
-                onClick={audioControl.pause}
+            {!isPlay ? (
+              <PlayCircleOutlined
+                onClick={audioControl.play}
                 style={{ fontSize: "36px" }}
               />
             ) : (
-              <PlayCircleOutlined
-                onClick={audioControl.play}
+              <PauseCircleOutlined
+                className="card-play-start"
+                onClick={audioControl.pause}
                 style={{ fontSize: "36px" }}
               />
             )}
