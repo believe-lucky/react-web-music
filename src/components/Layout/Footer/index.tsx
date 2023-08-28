@@ -11,7 +11,6 @@ import {
   DownloadOutlined,
   MessageOutlined,
   AlignRightOutlined,
-  SoundOutlined,
 } from "@ant-design/icons";
 import "./index.less";
 import baseMusicUrl from "/src/assets/images/logo.png";
@@ -81,19 +80,24 @@ function Footer({ songDetail: { id = "1950343972" } }) {
   const isPlay = audioControl.isPlay;
   const duration = audioControl.formattedDuration;
   const currentTime = audioControl.formattedCurrentTime;
-  const sliderValue = audioControl.sliderValue;
   const isMuted = audioControl.isMuted;
-  const handleSliderChange = (value: string) => {
-    audioControl.sliderValue = value;
+
+  const handleSliderChange = (value: number) => {
+    audioControl.seekTo(value);
+  };
+  // setAudioVolume
+  const setAudioVolume = (v: number) => {
+    audioControl.setAudioVolume(v);
+  };
+  const timeStringToSeconds = (timeString) => {
+    const [minutes, seconds] = timeString.split(":").map(Number);
+    const totalSeconds = minutes * 60 + seconds;
+    return +totalSeconds;
   };
   // 歌词页面
   const [isPlayerDetailOpen, setIsPlayerDetailOpen] = useState(false);
   const togglePlayerDetail = () => {
     setIsPlayerDetailOpen(!isPlayerDetailOpen);
-  };
-  // setAudioVolume
-  const setAudioVolume = (v: number) => {
-    audioControl.setAudioVolume(v);
   };
   return (
     <>
@@ -123,8 +127,9 @@ function Footer({ songDetail: { id = "1950343972" } }) {
                 <Slider
                   className="custom-slider"
                   defaultValue={0}
-                  value={sliderValue}
-                  onChange={() => handleSliderChange}
+                  value={timeStringToSeconds(currentTime)}
+                  max={timeStringToSeconds(duration)}
+                  onChange={handleSliderChange}
                   tooltip={{ open: false }}
                 />
               </ConfigProvider>

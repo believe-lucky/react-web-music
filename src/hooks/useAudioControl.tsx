@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useState } from "react";
+import { MutableRefObject, useEffect, useState, useCallback } from "react";
 
 interface TAudioControl {
   play: () => void;
@@ -11,7 +11,8 @@ interface TAudioControl {
   isMuted: boolean;
   mute: () => void;
   unmute: () => void;
-  sliderValue: number;
+  seekTo: (time: number) => void;
+  seek: (interval: number) => void;
 }
 
 const useAudioControl = (
@@ -22,21 +23,21 @@ const useAudioControl = (
   const [isPlay, setIsPlay] = useState(false);
   const [volume, setVolume] = useState(0.3); // 默认音量为 0.3
   const [isMuted, setIsMuted] = useState(false);
-  const [sliderValue, setSliderValue] = useState(0);
+  const [seekTime, setSeekTime] = useState(0);
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
-  // 播放
+
   const play = () => {
     if (audioRef.current) {
       audioRef.current.play();
       setIsPlay(true);
     }
   };
-  // 暂停
+
   const pause = () => {
     if (audioRef.current) {
       audioRef.current.pause();
@@ -44,13 +45,13 @@ const useAudioControl = (
     }
   };
 
-  // 音量
   const setAudioVolume = (value: number) => {
     if (audioRef.current) {
       audioRef.current.volume = value / 100;
       setVolume(value);
     }
   };
+
   const mute = () => {
     if (audioRef.current) {
       audioRef.current.muted = true;
@@ -64,21 +65,45 @@ const useAudioControl = (
       setIsMuted(false);
     }
   };
+
+  const seekTo = useCallback(
+    (time: number) => {
+      if (audioRef.current) {
+        audioRef.current.currentTime = time;
+      }
+    },
+    [audioRef]
+  );
+
+  const seek = (interval: number) => {
+    if (audioRef.current) {
+      const newTime = audioRef.current.currentTime + interval;
+      audioRef.current.currentTime = newTime;
+    }
+  };
+
   useEffect(() => {
     if (!audioRef.current) {
       return;
     }
+
     const audio = audioRef.current;
     audio.volume = 0.3;
+
     const handleTimeUpdate = () => {
       setFormattedCurrentTime(formatTime(audio.currentTime));
+      if (audio.currentTime === audio.duration) {
+        setIsPlay(false);
+      }
     };
 
     const handleDurationChange = () => {
       setFormattedDuration(formatTime(audio.duration));
     };
+
     audio.addEventListener("timeupdate", handleTimeUpdate);
     audio.addEventListener("durationchange", handleDurationChange);
+
     return () => {
       audio.removeEventListener("timeupdate", handleTimeUpdate);
       audio.removeEventListener("durationchange", handleDurationChange);
@@ -86,8 +111,11 @@ const useAudioControl = (
   }, [audioRef]);
 
   useEffect(() => {
-    setSliderValue(audioRef.current.currentTime);
-  }, [audioRef]);
+    if (seekTime !== 0) {
+      seekTo(seekTime);
+      setSeekTime(0);
+    }
+  }, [seekTime, seekTo]);
 
   return {
     play,
@@ -100,7 +128,8 @@ const useAudioControl = (
     isMuted,
     mute,
     unmute,
-    sliderValue,
+    seekTo,
+    seek,
   };
 };
 
