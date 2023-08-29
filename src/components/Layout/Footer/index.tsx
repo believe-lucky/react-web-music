@@ -19,6 +19,7 @@ import PlayerDetail from "@/pages/player";
 import { useSelector } from "react-redux";
 import onVolumeSvg from "@/assets/images/yinliang.png";
 import offVolumeSvg from "@/assets/images/guanbiyinliang.png";
+import { UpOutlined, DownOutlined } from "@ant-design/icons";
 // const baseMusicUrl =
 //   "https://p1.music.126.net/hsIpIgKpGlUlaHPF-qIKcQ==/109951168735465189.jpg";
 interface albumParams {
@@ -119,12 +120,14 @@ function Footer({ songDetail: { id = 2031881406 } }) {
             controls
             style={{ display: "none" }}
           ></audio>
-          <img
-            className="img"
-            onClick={togglePlayerDetail}
-            src={baseMusicUrl}
-            alt=""
-          />
+          <div className="img-wrapper" onClick={togglePlayerDetail}>
+            {isPlayerDetailOpen ? (
+              <DownOutlined className="arrow-icon" />
+            ) : (
+              <UpOutlined className="arrow-icon" />
+            )}
+            <img className="img" src={baseMusicUrl} alt="" />
+          </div>
           <div className="card-list-content">
             <div className="card-list-content-title">
               <div> 云音乐 </div>
