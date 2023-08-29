@@ -38,7 +38,7 @@ const getLyricList = function (params: albumParams) {
   // };
   return getSongLyric(params);
 };
-function Footer({ songDetail: { id = 2031881406 } }) {
+function Footer({ songDetail: { id = 1865718254 } }) {
   const [audioSrc, setAudioSrc] = useState();
   const { loading, run } = useRequest(getList, {
     onSuccess: (res: any, params) => {

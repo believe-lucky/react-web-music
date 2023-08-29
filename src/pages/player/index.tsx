@@ -3,6 +3,7 @@ import { Drawer } from "antd";
 import styles from "./style.module.less";
 import player from "@/assets/images/player.png";
 import plaything from "@/assets/images/player.gif";
+import { log } from "console";
 
 interface PlayerDetailProps {
   isOpen: boolean;
@@ -19,53 +20,32 @@ const PlayerDetail: React.FC<PlayerDetailProps> = ({
   isPlay,
   activeTime,
 }) => {
-  const [scrollInterval, setScrollInterval] = useState<number | null>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-
+  const HIGHLIGHT_LYRIC_TOP = 160;
+  const LYRIC_LINE_HEIGHT = 46;
+  const lyricRef = useRef<HTMLDivElement>(null);
+  const [line, setLine] = useState(0);
   useEffect(() => {
-    const startScrolling = () => {
-      if (scrollInterval) return; // 已经在滚动中，则不再重复启动滚动
-
-      const container = containerRef.current; // 歌词容器元素
-      const highlightedLyric = container?.querySelector(".highlighted"); // 高亮歌词元素
-      if (!container || !highlightedLyric) return;
-
-      const containerHeight = container.offsetHeight; // 容器高度
-      const lyricHeight = highlightedLyric.offsetHeight; // 高亮歌词元素高度
-      const lyricOffset = highlightedLyric.offsetTop; // 高亮歌词元素与容器顶部的偏移量
-
-      // 计算需要滚动的距离
-      const scrollOffset = lyricOffset - containerHeight / 2 + lyricHeight / 2;
-
-      // 滚动到中心位置
-      container.scrollTop = scrollOffset;
-
-      // 启动定时器，每隔一段时间执行一次滚动
-      const interval = setInterval(() => {
-        container.scrollTop += 1; // 根据需要调整滚动速度
-      }, 100); // 根据需要调整滚动间隔时间
-
-      setScrollInterval(interval);
-    };
-
-    const stopScrolling = () => {
-      if (scrollInterval) {
-        clearInterval(scrollInterval); // 清除定时器
-        setScrollInterval(null);
+    window.requestAnimationFrame(() => {
+      const lineIndex = playKlyRic.findIndex((v, index) => {
+        const prevTime = timeStringToSeconds(playKlyRic[index]?.time);
+        const nextTime = timeStringToSeconds(playKlyRic[index + 1]?.time) - 1;
+        const currentTime = timeStringToSeconds(activeTime);
+        if (prevTime <= currentTime && nextTime >= currentTime) {
+          return true;
+        }
+        return false; // 返回 false 以继续查找下一个元素
+      });
+      if (lineIndex > -1) {
+        const scrollHeight =
+          LYRIC_LINE_HEIGHT * lineIndex - HIGHLIGHT_LYRIC_TOP;
+        lyricRef.current?.scrollTo({
+          top: scrollHeight < 0 ? 0 : scrollHeight,
+          behavior: "smooth",
+        });
+        setLine(lineIndex);
       }
-    };
-
-    // 监听播放状态，根据播放状态控制滚动开始和停止
-    if (isPlay && isOpen) {
-      startScrolling();
-    } else {
-      stopScrolling();
-    }
-
-    return () => {
-      stopScrolling(); // 组件卸载时停止滚动
-    };
-  }, [playKlyRic, isOpen, isPlay]);
+    });
+  }, [activeTime, playKlyRic]);
 
   const timeStringToSeconds = (timeString: string) => {
     const [minutes, seconds] = timeString
@@ -75,12 +55,12 @@ const PlayerDetail: React.FC<PlayerDetailProps> = ({
     return +totalSeconds;
   };
 
-  const highlightLyrics = (currentTime, startTime, endTime) => {
-    const currentSeconds = timeStringToSeconds(currentTime);
-    const startSeconds = timeStringToSeconds(startTime);
-    const endSeconds = timeStringToSeconds(endTime);
-    return currentSeconds >= startSeconds && currentSeconds < endSeconds;
-  };
+  // const highlightLyrics = (currentTime, startTime, endTime) => {
+  //   const currentSeconds = timeStringToSeconds(currentTime);
+  //   const startSeconds = timeStringToSeconds(startTime);
+  //   const endSeconds = timeStringToSeconds(endTime);
+  //   return currentSeconds >= startSeconds && currentSeconds < endSeconds;
+  // };
 
   return (
     <>
@@ -105,22 +85,15 @@ const PlayerDetail: React.FC<PlayerDetailProps> = ({
             )}
           </div>
           <div className={styles.right}>
-            <div className={styles.content} ref={containerRef}>
+            <div
+              className={styles.content}
+              ref={(ref) => (lyricRef.current = ref)}
+            >
               {Array.isArray(playKlyRic)
                 ? playKlyRic.map((v: any, index: number) => {
                     return (
                       <div className={styles.lyc} key={v.time}>
-                        <p
-                          className={
-                            highlightLyrics(
-                              activeTime,
-                              playKlyRic[index]?.time,
-                              playKlyRic[index + 1]?.time
-                            )
-                              ? styles.highlighted
-                              : ""
-                          }
-                        >
+                        <p className={line === index ? styles.highlighted : ""}>
                           {v.lyc}
                         </p>
                       </div>
