@@ -51,6 +51,8 @@ const useAudioControl = (
     if (audioRef.current) {
       audioRef.current.volume = value / 100;
       setVolume(value);
+      audioRef.current.muted = false;
+      setIsMuted(false);
     }
   };
 
