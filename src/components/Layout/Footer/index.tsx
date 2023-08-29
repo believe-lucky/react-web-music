@@ -99,7 +99,7 @@ function Footer({ songDetail: { id = 2031881406 } }) {
   const setAudioVolume = (v: number) => {
     audioControl.setAudioVolume(v);
   };
-  const timeStringToSeconds = (timeString) => {
+  const timeStringToSeconds = (timeString: string) => {
     const [minutes, seconds] = timeString.split(":").map(Number);
     const totalSeconds = minutes * 60 + seconds;
     return +totalSeconds;
@@ -198,6 +198,7 @@ function Footer({ songDetail: { id = 2031881406 } }) {
           toggleDrawer={togglePlayerDetail}
           playKlyRic={klyRic}
           isPlay={isPlay}
+          activeTime={currentTime}
         />
       </div>
     </>
