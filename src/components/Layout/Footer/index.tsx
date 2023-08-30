@@ -55,9 +55,6 @@ function Footer({ songDetail: { id = 1865718254 } }) {
     onError: (error) => message.error(error.message),
     manual: true,
   });
-  if (loading) {
-    return <div>加载中....</div>;
-  }
   const [klyRic, setKlyRic] = useState<LyricItem[]>([]);
   const { loading: klyRicLoading, run: runLyric } = useRequest(getLyricList, {
     onSuccess: (res) => {
@@ -80,9 +77,6 @@ function Footer({ songDetail: { id = 1865718254 } }) {
     onError: (error) => message.error(error.message),
     manual: true,
   });
-  if (klyRicLoading) {
-    return <div>歌词加载中....</div>;
-  }
   // 推荐歌单的id
   const getId = useSelector((state) => state.emitSongId.id);
 
@@ -126,6 +120,12 @@ function Footer({ songDetail: { id = 1865718254 } }) {
   const togglePlayerDetail = () => {
     setIsPlayerDetailOpen(!isPlayerDetailOpen);
   };
+  // if (loading) {
+  //   return <div>加载中....</div>;
+  // }
+  // if (klyRicLoading) {
+  //   return <div>歌词加载中....</div>;
+  // }
   return (
     <>
       <div className="card">
