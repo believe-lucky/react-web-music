@@ -10,7 +10,8 @@
     "build:prod": "vite build --mode production",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "deploy": "vite build && gh-pages -d dist"
+    "deploy": "vite build --mode development && gh-pages -d dist",
+    "deploy:prod": "vite build --mode production && gh-pages -d dist"
   },
   "dependencies": {
     "@ant-design/icons": "^5.2.5",
