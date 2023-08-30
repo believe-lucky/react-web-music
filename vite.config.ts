@@ -5,9 +5,13 @@ import eslintPlugin from "vite-plugin-eslint";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "./", //设置项目的根目录
   build: {
-    outDir: "dist", // 打包文件的输出目录
+    rollupOptions: {
+      output: {
+        // 设置公共的输出目录为 dist
+        dir: "dist",
+      },
+    },
   },
   plugins: [
     react(),
