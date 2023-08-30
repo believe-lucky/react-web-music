@@ -6,7 +6,7 @@
   "homepage": "https://believe-lucky.github.io/react-web-music",
   "scripts": {
     "dev": "vite --mode development",
-    "build": "vite build --mode production",
+    "build": "vite build --mode development",
     "build:prod": "vite build --mode production",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
