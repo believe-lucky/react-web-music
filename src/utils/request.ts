@@ -21,13 +21,13 @@ declare module "axios" {
 const baseURL =
   process.env.NODE_ENV === "production"
     ? "https://music-node-liart.vercel.app/"
-    : "http://localhost:3000";
+    : "http://duoduozuikeail.top:3000/";
 // 创建自定义实例
 const instance: AxiosInstance = axios.create({
   baseURL: baseURL,
   timeout: 5000,
 });
-
+// 本地： "http://localhost:3000";
 // 云部署 node 地址 ：https://music-node-liart.vercel.app/
 
 instance.interceptors.request.use(
