@@ -5,6 +5,10 @@ import eslintPlugin from "vite-plugin-eslint";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "./", //设置项目的根目录
+  build: {
+    outDir: "dist", // 打包文件的输出目录
+  },
   plugins: [
     react(),
     eslintPlugin({
@@ -32,11 +36,11 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/ai': {
-        target: 'https://wenxin.baidu.com/moduleApi/portal/api',
+      "/ai": {
+        target: "https://wenxin.baidu.com/moduleApi/portal/api",
         changeOrigin: true,
-        rewrite: path => path.replace(/^\/ai/, '')
-      }
-    }
+        rewrite: (path) => path.replace(/^\/ai/, ""),
+      },
+    },
   },
 });
