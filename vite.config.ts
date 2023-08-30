@@ -5,17 +5,18 @@ import eslintPlugin from "vite-plugin-eslint";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: process.env.NODE_ENV === "production" ? "/react-web-music/" : "/",
+  // base: process.env.NODE_ENV === "production" ? "/react-web-music/" : "./",
+  base: "/react-web-music/",
   build: {
     outDir: "dist", // 设置输出目录为 dist
-    sourcemap: false, // 关闭生成 Source Map 文件
-    rollupOptions: {
-      output: {
-        entryFileNames: "[name]-[hash].js", // 自定义输出文件名格式
-        chunkFileNames: "[name]-[hash].js",
-        assetFileNames: "[name]-[hash][extname]", // 自定义静态资源文件名格式
-      },
-    },
+    // sourcemap: false, // 关闭生成 Source Map 文件
+    // rollupOptions: {
+    //   output: {
+    //     entryFileNames: "[name]-[hash].js", // 自定义输出文件名格式
+    //     chunkFileNames: "[name]-[hash].js",
+    //     assetFileNames: "[name]-[hash][extname]", // 自定义静态资源文件名格式
+    //   },
+    // },
   },
   plugins: [
     react(),
