@@ -6,10 +6,13 @@ import eslintPlugin from "vite-plugin-eslint";
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
+    outDir: "dist", // 设置输出目录为 dist
+    sourcemap: false, // 关闭生成 Source Map 文件
     rollupOptions: {
       output: {
-        // 设置公共的输出目录为 dist
-        dir: "dist",
+        entryFileNames: "[name]-[hash].js", // 自定义输出文件名格式
+        chunkFileNames: "[name]-[hash].js",
+        assetFileNames: "[name]-[hash][extname]", // 自定义静态资源文件名格式
       },
     },
   },
