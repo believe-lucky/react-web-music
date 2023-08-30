@@ -6,7 +6,7 @@ import eslintPlugin from "vite-plugin-eslint";
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
-    outDir: "dist", // 设置输出目录为 dist
+    outDir: "docs", // 设置输出目录为 dist
     sourcemap: false, // 关闭生成 Source Map 文件
     rollupOptions: {
       output: {
