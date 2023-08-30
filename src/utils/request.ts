@@ -19,9 +19,9 @@ declare module "axios" {
   }
 }
 const baseURL =
-  process.env.NODE_ENV !== "production"
-    ? "http://localhost:3000"
-    : "https://music-node-liart.vercel.app/";
+  process.env.NODE_ENV === "production"
+    ? "https://music-node-liart.vercel.app/"
+    : "http://localhost:3000";
 // 创建自定义实例
 const instance: AxiosInstance = axios.create({
   baseURL: baseURL,
