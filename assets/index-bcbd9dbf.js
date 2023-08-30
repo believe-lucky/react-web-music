@@ -1,1 +1,0 @@
-import{aB as e}from"./index-52a50a6b.js";function i(){return e.jsxDEV("div",{children:"setting"},void 0,!1,{fileName:"D:/办公/learn/实践/react-web-music/src/pages/setting/index.tsx",lineNumber:5,columnNumber:5},this)}export{i as default};
