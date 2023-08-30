@@ -3,12 +3,14 @@ import { Drawer } from "antd";
 import styles from "./style.module.less";
 import player from "@/assets/images/player.png";
 import plaything from "@/assets/images/player.gif";
-import { log } from "console";
-
+interface LyricItem {
+  time: string;
+  lyc: string;
+}
 interface PlayerDetailProps {
   isOpen: boolean;
   toggleDrawer: () => void;
-  playKlyRic: Array<any>;
+  playKlyRic: LyricItem[];
   isPlay: boolean;
   activeTime: string;
 }

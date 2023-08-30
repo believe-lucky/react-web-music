@@ -1,6 +1,6 @@
 import request from "@/utils/request";
 interface Params {
-  id: string;
+  id: string | number;
 }
 
 //album?id=169512732

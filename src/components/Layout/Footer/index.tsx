@@ -11,6 +11,8 @@ import {
   DownloadOutlined,
   MessageOutlined,
   AlignRightOutlined,
+  UpOutlined,
+  DownOutlined,
 } from "@ant-design/icons";
 import "./index.less";
 import baseMusicUrl from "/src/assets/images/logo.png";
@@ -19,11 +21,11 @@ import PlayerDetail from "@/pages/player";
 import { useSelector } from "react-redux";
 import onVolumeSvg from "@/assets/images/yinliang.png";
 import offVolumeSvg from "@/assets/images/guanbiyinliang.png";
-import { UpOutlined, DownOutlined } from "@ant-design/icons";
+import { message } from "antd";
 // const baseMusicUrl =
 //   "https://p1.music.126.net/hsIpIgKpGlUlaHPF-qIKcQ==/109951168735465189.jpg";
 interface albumParams {
-  id: string;
+  id: number | string;
 }
 const getList = function (params: albumParams) {
   // const params: albumParams = {
@@ -38,10 +40,14 @@ const getLyricList = function (params: albumParams) {
   // };
   return getSongLyric(params);
 };
+interface LyricItem {
+  time: string;
+  lyc: string;
+}
 function Footer({ songDetail: { id = 1865718254 } }) {
   const [audioSrc, setAudioSrc] = useState();
   const { loading, run } = useRequest(getList, {
-    onSuccess: (res: any, params) => {
+    onSuccess: (res) => {
       if (res.code === 200) {
         setAudioSrc(res.data[0].url);
       }
@@ -49,12 +55,15 @@ function Footer({ songDetail: { id = 1865718254 } }) {
     onError: (error) => message.error(error.message),
     manual: true,
   });
-  const [klyRic, setKlyRic] = useState("");
-  const { loading1, run: runLyric } = useRequest(getLyricList, {
-    onSuccess: (res, params) => {
+  if (loading) {
+    return <div>加载中....</div>;
+  }
+  const [klyRic, setKlyRic] = useState<LyricItem[]>([]);
+  const { loading: klyRicLoading, run: runLyric } = useRequest(getLyricList, {
+    onSuccess: (res) => {
       if (res.code === 200) {
         const lyric = res.lrc.lyric;
-        let lyricList = [];
+        let lyricList: LyricItem[] = [];
         lyric
           .split(/[\n]/) // 截取中括号
           .forEach((item) => {
@@ -71,18 +80,25 @@ function Footer({ songDetail: { id = 1865718254 } }) {
     onError: (error) => message.error(error.message),
     manual: true,
   });
+  if (klyRicLoading) {
+    return <div>歌词加载中....</div>;
+  }
   // 推荐歌单的id
   const getId = useSelector((state) => state.emitSongId.id);
 
   useEffect(() => {
-    if (id) {
-      console.log(id, "id");
-      run({ id });
-      runLyric({ id });
-      setTimeout(() => {
-        // audioControl.play();
-      }, 0);
-    }
+    const fetchData = async () => {
+      if (id) {
+        console.log(id, "id");
+        run({ id });
+        runLyric({ id });
+        setTimeout(() => {
+          // audioControl.play();
+        }, 0);
+      }
+    };
+
+    fetchData();
   }, [id]);
   // audio 相关
   const audioRef = useRef<HTMLAudioElement>(null);

@@ -1,9 +1,34 @@
-import axios from "axios";
+import axios, { AxiosInstance, AxiosResponse, AxiosError } from "axios";
 
-const instance = axios.create({
-  baseURL: "http://localhost:3000",
+// 定义自定义类型
+interface MyResponse<T = any> extends AxiosResponse {
+  code: number;
+  data: T;
+}
+
+interface MyError extends AxiosError {
+  // 添加你需要的自定义错误属性
+  customField: string;
+}
+
+// 扩展 AxiosInstance 接口
+declare module "axios" {
+  interface AxiosInstance {
+    (config: AxiosRequestConfig): Promise<MyResponse>;
+    (url: string, config?: AxiosRequestConfig): Promise<MyResponse>;
+  }
+}
+const baseURL =
+  process.env.NODE_ENV !== "production"
+    ? "http://localhost:3000"
+    : "https://music-node-liart.vercel.app/";
+// 创建自定义实例
+const instance: AxiosInstance = axios.create({
+  baseURL: baseURL,
   timeout: 5000,
 });
+
+// 云部署 node 地址 ：https://music-node-liart.vercel.app/
 
 instance.interceptors.request.use(
   (config) => config,
@@ -12,7 +37,7 @@ instance.interceptors.request.use(
 
 instance.interceptors.response.use(
   (res) => res.data,
-  (error) => Promise.reject(error)
+  (error: MyError) => Promise.reject(error)
 );
 
 export default instance;

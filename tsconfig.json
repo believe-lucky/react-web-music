@@ -12,7 +12,7 @@
     "useDefineForClassFields": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": ["webpack-env", "jest"],
+    "types": ["webpack-env", "jest", "node"],
     "paths": {
       "@/*": ["src/*"],
       "views/*": ["src/views/*"]
@@ -27,7 +27,7 @@
     "tests/**/*.tsx",
     "shims-react.d.ts",
     "src/main.tsx",
-    "src/router/index.tsx",
+    "src/router/index.tsx"
   ],
   "exclude": ["node_modules"]
 }
