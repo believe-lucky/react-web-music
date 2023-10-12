@@ -11,7 +11,7 @@ import { emitDetail } from '@/store/emitSongSlice'
 const getHotSearchList = () => {
   return hotSearch();
 };
-export default function SearchContent({ sonList, handleDestory, keywords, handleOpenSearch }) {
+export default function SearchContent({ songList, handleDestory, keywords, handleOpenSearch }) {
   const [hotSearchList, setHotSearchList] = useState([]);
   const { loading, run } = useRequest(getHotSearchList, {
     manual: true,
@@ -38,22 +38,22 @@ export default function SearchContent({ sonList, handleDestory, keywords, handle
       setHotSearchList([]);
     };
   }, []);
-  const handleClickSonList = (target) => {
+  const handleClickSongList = (target) => {
     dispatch(emitDetail(JSON.parse(target.dataset.songdetail)))
     // 关闭popover
     handleOpenSearch(false)
   }
   return (
     <div className="searchContainer">
-      {(sonList.length && (
+      {(songList.length && (
         <>
           <p className="hotSearch">
             <SearchOutlined />
             猜你想搜
           </p>
-          <ul className="hotSearchList" onClick={(e) => handleClickSonList(e.target)}>
-            {sonList.map((item) => (
-              <li className="searchSonItem" key={item.id} data-songdetail={JSON.stringify(item)}>
+          <ul className="hotSearchList" onClick={(e) => handleClickSongList(e.target)}>
+            {songList.map((item) => (
+              <li className="searchSongItem" key={item.id} data-songdetail={JSON.stringify(item)}>
                 {item.name}
               </li>
             ))}

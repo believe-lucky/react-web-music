@@ -19,21 +19,21 @@ interface SearchParams {
   keywords: string;
   // type: number
 }
-const searchSon = function (params: SearchParams) {
+const searchSong = function (params: SearchParams) {
   return search(params);
 };
 
 export default function Header() {
   const [keywords, setKeywords] = useState("");
-  const [sonList, setSonList] = useImmer([]);
-  const { loading, run } = useRequest(searchSon, {
+  const [songList, setSongList] = useImmer([]);
+  const { loading, run } = useRequest(searchSong, {
     manual: true,
     debounceWait: 500,
     onSuccess: (res, params) => {
       if (res.code == 200) {
-        setSonList(res.result.songs);
+        setSongList(res.result.songs);
       } else {
-        setSonList([]);
+        setSongList([]);
       }
     },
     onError: (error) => message.error(error.message),
@@ -47,7 +47,7 @@ export default function Header() {
   );
   // 子组件卸载后，清空数据
   const handleDestory = () => {
-    setSonList([]);
+    setSongList([]);
   };
   // 点击歌曲后，自动关闭搜索的弹窗
   const [openSearch, setOpenSearch] = useState(false)
@@ -77,7 +77,7 @@ export default function Header() {
           <Popover
             content={
               <SearchContent
-                sonList={sonList}
+                songList={songList}
                 handleDestory={handleDestory}
                 keywords={keywords}
                 handleOpenSearch={handleOpenSearch}
