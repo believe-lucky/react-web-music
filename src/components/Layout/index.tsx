@@ -14,7 +14,9 @@ const contentStyle: React.CSSProperties = {
   // lineHeight: "120px",
   // color: "#fff",
   backgroundColor: "#fff",
-  padding: '20px 0 20px 30px'
+  padding: '20px 0 20px 30px',
+  height: 'calc(100vh - 140px)',
+  overflowY: 'auto',
 };
 
 const siderStyle: React.CSSProperties = {

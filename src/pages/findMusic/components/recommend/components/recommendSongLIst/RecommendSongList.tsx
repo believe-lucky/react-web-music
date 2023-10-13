@@ -13,7 +13,6 @@ export default function RecommendSongList() {
   const [songList, setSongList] = useImmer([])
   const { data, error } = useRequest(getRecodSongList, {
     onSuccess: res => {
-      console.log('推荐歌单', res);
       if (res.code == 200) {
         const list = res.result.slice(0, 10)
         list.forEach(item => {
@@ -27,8 +26,9 @@ export default function RecommendSongList() {
   })
   const navigate = useNavigate()
   const clickRecoItem = (detail) => {
-    console.log('获取对应歌单列表--->', detail);
-    navigate(`/songlistdetail/${detail.id}`)
+    navigate(`/songlistdetail/${detail.id}`, {
+      state: detail
+    })
   }
   return (
     <>

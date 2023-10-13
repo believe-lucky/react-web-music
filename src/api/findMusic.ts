@@ -19,3 +19,6 @@ interface PlayListParams {
 export const playlist = (params:PlayListParams) => {
   return request.get('/playlist/track/all', { params })
 }
+export const like = (params:{id: number}) => {
+  return request.get('/like', { params })
+}

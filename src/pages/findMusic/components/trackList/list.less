@@ -1,0 +1,28 @@
+.track-list-table {
+  .anticon {
+    font-size: 16px;
+  }
+  .like, .download {
+    cursor: pointer;
+    color: #999;
+    &:hover {
+      color: #333;
+    }
+  }
+  .download {
+    margin-left: 10px;
+  }
+  .ant-table-tbody {
+    tr:nth-child(2n + 1) {
+      background-color: #fafafa;
+    }
+    tr:hover {
+      td.ant-table-cell {
+        background-color: #f2f2f3;
+      }
+    }
+    td.ant-table-cell {
+      padding-block: 8px;
+    }
+  }
+}
