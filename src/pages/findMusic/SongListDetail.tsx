@@ -12,9 +12,10 @@ import {
   PlusOutlined
 } from '@ant-design/icons';
 import TrackList from './components/trackList'
+import { formatTimestamp } from '@/hooks/useFormat'
 export default function SongListDetail() {
   const { id } = useParams()
-  const { state: { formatPlayCount, name, picUrl, trackCount } } = useLocation()
+  const { state: { formatPlayCount, name, picUrl, trackCount, trackNumberUpdateTime } } = useLocation()
 
   return (
     <div className='track-all'>
@@ -22,7 +23,7 @@ export default function SongListDetail() {
         <Image src={picUrl} preview={false} />
         <div className="content">
           <p>{name}</p>
-          <div>tom 2023-02-03创建</div>
+          <div>{formatTimestamp(trackNumberUpdateTime)} 创建</div>
           <div style={{ marginBottom: '18px' }} className='btns'>
             <div className='playbtn'>
               <div className='playbtn-all'><CaretRightOutlined />播放全部</div>

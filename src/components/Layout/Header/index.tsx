@@ -15,6 +15,7 @@ import { useRequest } from "ahooks";
 import { useImmer } from "use-immer";
 import SearchContent from "./Searcher";
 import Theme from "./Theme";
+import { useNavigate } from 'react-router-dom'
 interface SearchParams {
   keywords: string;
   // type: number
@@ -60,6 +61,9 @@ export default function Header() {
       run({ keywords })
     }
   }
+
+  const navigate = useNavigate()
+  
   return (
     <div className="headerContent">
       <div className="logo">
@@ -67,10 +71,10 @@ export default function Header() {
         <span className="logoTitle">云音乐</span>
       </div>
       <div className="headerNavigate">
-        <div className="navigateIcon">
+        <div className="navigateIcon" onClick={() => navigate(-1)}>
           <i className="iconfont icon-left"></i>
         </div>
-        <div className="navigateIcon" style={{ marginLeft: "10px" }}>
+        <div className="navigateIcon" style={{ marginLeft: "10px" }} onClick={() => navigate(1)}>
           <i className="iconfont icon-right"></i>
         </div>
         <div className="headerSearch">

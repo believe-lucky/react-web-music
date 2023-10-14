@@ -5,3 +5,12 @@ export const formatTime = (time: number) => {
   const seconds = Math.floor(t % 60)
   return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
 }
+
+// 时间戳转日期:
+export const formatTimestamp = (timestamp: number) => {
+  const time = new Date(timestamp)
+  const year = time.getFullYear()
+  const month = time.getMonth() + 1
+  const date = time.getDate()
+  return `${year}-${month}-${date}`
+}
